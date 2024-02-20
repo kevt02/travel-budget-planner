@@ -1,9 +1,9 @@
+// authRoutes.js or within an existing routes file
 const express = require('express');
 const router = express.Router();
-const authController = require('../controller/authController');
+const { login } = require('../controller/authController');
 
-// CRUD operations for Assignments
-router.post('/login', authController.login);  // Create a new assignment
-
+// Define the route for logging in
+router.post('/login', login);  // Route for user login
 
 module.exports = router;
