@@ -6,17 +6,28 @@ body {
   margin: 0;
 }
 
-.title {
-  font-size: 20px;
-}
-
 .header {
   background-color: orange;
-  color: white;
+  color: black;
+  font-size: 20pt;
   display: flex;
   justify-content: space-between;
   gap: 2rem;
-  padding: 0 1rem;
+  padding: 10px;
+  width: 100%;
+}
+
+.title {
+  padding-top: 5px;
+  font-weight: bold;
+}
+
+.login {
+  font-size: 15pt;
+  border: solid;
+  border-radius: 10px;
+  border-color: black;
+  padding: 10px;
 }
 
 .header a {
@@ -24,6 +35,13 @@ body {
   text-decoration: none;
 }
 
+.sidebar-container {
+  background-color: orange;
+  height: 80px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
 
 .sidebar {
   background-color: orange;
@@ -76,9 +94,13 @@ sidebar-items {
   border-radius: 4px;
 }
 
-.nav-text a:hover {
+.nav-text a:hover{
   background-color: orange;
   color: #fff;
+}
+
+.login:hover {
+  background-color: white;
 }
 
 .menu-bars {

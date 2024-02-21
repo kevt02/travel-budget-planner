@@ -1,15 +1,16 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import * as FaIcons from "react-icons/fa";
+import { GiPiggyBank } from "react-icons/gi";
+import { FaUser } from "react-icons/fa";
 
 function Header() {
   return (
     <nav className="header">
         <Link to="/" className="title">
-            <img src={FaIcons.FaPiggyBank}/> 
+            <GiPiggyBank />
             Penny Pilot
         </Link>
-        <Link to="/login" className="login">Login</Link>
+        <Link to="/login" className="login"><FaUser />Login</Link>
     </nav>
   )
 }

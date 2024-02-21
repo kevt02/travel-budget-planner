@@ -13,9 +13,8 @@ import Stays from './routes/Stays';
 function App() {
     return (
         <>
-            
             <BrowserRouter>
-            <Header />
+            {/* <Header /> */}
             <Sidebar />
                 <Routes>
                     <Route path="/" element={<Home />} />
