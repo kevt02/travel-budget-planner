@@ -1,18 +1,16 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Cities from "./components/Cities";
-import Read from "./components/Read";
-import Add from "./components/Add";
-import Update from "./components/Update";
+import CreateAccount from "./components/CreateAccount";
+import CreateAccountDetail from "./components/CreateAccountDetail";
+
+
 
 function App() {
     return (
         <div className="app">
             <BrowserRouter>
                 <Routes>
-                    <Route path="/" element={<Cities />} />
-                    <Route path="/read/:cityName" element={<Read />} />
-                    <Route path="/add" element={<Add />} />
-                    <Route path="/update/:cityName" element={<Update />} />
+                    <Route path="/" element={<CreateAccount />} />
+                    <Route path="/:user" element={<CreateAccountDetail />} />
                 </Routes>
             </BrowserRouter>
         </div>
