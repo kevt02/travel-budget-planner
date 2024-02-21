@@ -1,51 +1,126 @@
 // ----------------------------------------------
 // TCSS 460: Winter 2024
-// Backend REST Service Module for Assignment Planner
+// Backend REST Service Module
 // ----------------------------------------------
-require('dotenv').config(); 
-const express = require("express");
-const morgan = require("morgan"); 
-const bodyParser = require("body-parser"); 
-const cors = require('cors'); 
+// Express is a Node.js web application framework
+// that provides a wide range of APIs and methods
+// Express API Reference:
+// https://expressjs.com/en/resources/middleware/cors.html
 
 // ----------------------------------------------
-// Import route for authentication
-// ----------------------------------------------
-const authRoutes = require('./routes/authRoutes');
+// retrieve necessary files (express and cors)
+const express = require("express")
+const cors = require("cors")
+// retrieve the MySQL DB Configuration Module
+const dbConnection = require("./config")
+// use this library for parsing HTTP body requests
+var bodyParser = require('body-parser');
+
 
 // ----------------------------------------------
-// Middleware for logging, parsing body, and handling CORS
+// (A)  Create an express application instance
+//      and parses incoming requests with JSON
+//      payloads
 // ----------------------------------------------
-const app = express();
-app.use(morgan('dev'));
-app.use(bodyParser.json()); // Parses incoming request bodies in JSON format.
-app.use(bodyParser.urlencoded({ extended: true }));
+var app = express(express.json);
+
+// ----------------------------------------------
+// (B)  Use the epxress cors middleware
+//      Cross-origin resource sharing (CORS)
+//      is a technique that restricts specified
+//      resources within web page to be accessed
+//      from other domains on which the origin
+//      resource was initiated the HTTP request
+//      Also use the bodyParser to parse in 
+//      format the body of HTTP Requests
+// ----------------------------------------------
 app.use(cors());
+app.use(bodyParser.json());
 
 // ----------------------------------------------
-// Route middleware for authentication
-// ----------------------------------------------
-
-app.use('/auth', authRoutes);
-
-
-// ----------------------------------------------
-// Error handling middleware to catch and respond to errors throughout the application
-// ----------------------------------------------
-app.use((err, req, res, next) => {
-    console.error(err.stack);
-    const statusCode = err.statusCode || 500;
-    const message = err.message || 'Internal Server Error';
-    res.status(statusCode).send({
-        error: true,
-        message: message
+// (1) Retrieve all records in population table
+// root URI: http://localhost:port/
+app.get('/', (request, response) => {
+    const sqlQuery = "SELECT * FROM population;";
+    dbConnection.query(sqlQuery, (err, result) => {
+        if (err) {
+            return response.status(400).json({ Error: "Error in the SQL statement. Please check." });
+        }
+        response.setHeader('SQLQuery', sqlQuery); // send a custom header attribute
+        return response.status(200).json(result);
     });
 });
 
 // ----------------------------------------------
-// Start the server on the configured port
-// ----------------------------------------------
-const port = process.env.PORT || 3001;
-app.listen(port, () => {
-    console.log(`Server running on port ${port}`);
+// (2) Retrieve one record by city name
+// city URI: http://localhost:port/city
+app.get('/:city', (request, response) => {
+    const city = request.params.city;
+    const sqlQuery = "SELECT * FROM population WHERE CITY = '" + city + "';";
+    dbConnection.query(sqlQuery, (err, result) => {
+        if (err) {
+            return response.status(400).json({ Error: "Error in the SQL statement. Please check." });
+        }
+        response.setHeader('CityName', city); // send a custom
+        return response.status(200).json(result);
+    });
 });
+
+// ----------------------------------------------
+// (3) insert a new record by city name
+// city URI: http://localhost:port/city
+app.post('/:city', (request, response) => {
+    const sqlQuery = 'INSERT INTO POPULATION VALUES (?);';
+    const values = [request.body.city, request.body.population, request.body.populationRank,
+    request.body.landArea, request.body.populationDensity, request.body.populationDensityRank];
+    dbConnection.query(sqlQuery, [values], (err, result) => {
+        if (err) {
+            return response.status(400).json({ Error: "Failed: Record was not added." });
+        }
+        return response.status(200).json({ Success: "Successful: Record was added!." });
+    });
+});
+
+// ----------------------------------------------
+// (4) update an existing record by city name
+// city URI: http://localhost:port/city
+app.put('/:city', (request, response) => {
+    const city = request.params.city;
+    const sqlQuery = `UPDATE POPULATION SET city = ?, population = ?,
+    populationRank = ?, landArea = ?, populationDensity = ?, populationDensityRank = ?
+    WHERE CITY = ? ;`;
+    const values = [request.body.city, request.body.population, request.body.populationRank,
+    request.body.landArea, request.body.populationDensity, request.body.populationDensityRank];
+    console.log(sqlQuery); // for debugging purposes:
+    dbConnection.query(sqlQuery, [...values, city], (err, result) => {
+        if (err) {
+            return response.status(400).json({ Error: "Failed: Record was not added." });
+        }
+        return response.status(200).json({ Success: "Successful: Record was updated!." });
+    });
+});
+
+// ----------------------------------------------
+// (5) Delete a record by city name
+// city URI: http://localhost:port/city
+app.delete('/:city', (request, response) => {
+    const city = request.params.city;
+    const sqlQuery = "DELETE FROM population WHERE CITY = ? ; ";
+    dbConnection.query(sqlQuery, city, (err, result) => {
+    if (err) {
+    return response.status(400).json({ Error: "Failed: Record was not deleted" });
+    }
+    return response.status(200).json({ Success: "Succcessful: Record was deleted!" });
+    });
+    });
+
+// ----------------------------------------------
+// Ref: https://expressjs.com/en/4x/api.html#app
+// (C)  Create a server such that it binds and
+//      listens on a specified host and port.
+//      We will use default host and port 3000.
+app.listen(2000, () => {
+    console.log("Express server is running and listening");
+});
+
+
