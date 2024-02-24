@@ -1,6 +1,6 @@
 import { useState } from "react"
 export default function Preferences(){
-    [email, setemail ] = useState("")
+   const [email, setemail ] = useState("")
     const handlechange =(e)=>{
         setemail(e.target.value)
     }
