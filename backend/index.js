@@ -8,6 +8,8 @@ const morgan = require("morgan");
 const bodyParser = require("body-parser"); 
 const cors = require('cors'); 
 
+const mongoose = require('mongoose');
+
 // ----------------------------------------------
 // Import route for authentication
 // ----------------------------------------------
@@ -21,6 +23,10 @@ app.use(morgan('dev'));
 app.use(bodyParser.json()); // Parses incoming request bodies in JSON format.
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cors());
+const mongoDBconnectString = "mongodb+srv://testuser:1111@cluster0.aldlabm.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
+
+// Connect to MongoDB
+mongoose.connect(mongoDBconnectString);
 
 // ----------------------------------------------
 // Route middleware for authentication
