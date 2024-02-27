@@ -10,7 +10,7 @@ function Header() {
             <GiPiggyBank />
             Penny Pilot
         </Link>
-        <Link to="/login" className="login"><FaUser />Login</Link>
+        <Link to="/createaccount" className="login"><FaUser />Login</Link>
     </nav>
   )
 }

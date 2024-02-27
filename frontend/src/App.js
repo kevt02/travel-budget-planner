@@ -9,6 +9,8 @@ import Savings from './routes/Savings';
 import Flights from './routes/Flights';
 import Trains from './routes/Trains';
 import Stays from './routes/Stays';
+import CreateAccount from './routes/CreateAccount';
+import CreateAccountDetail from './routes/CreateAccountDetail';
 
 function App() {
     return (
@@ -22,6 +24,8 @@ function App() {
                     <Route path="/flights" element={<Flights />} />
                     <Route path="/trains" element={<Trains />} />
                     <Route path="/stays" element={<Stays />} />
+                    <Route path="/createaccount" element={<CreateAccount />} />
+                    <Route path="/createaccountdetail" element={<CreateAccountDetail />} />
                 </Routes>
             </BrowserRouter>
 
