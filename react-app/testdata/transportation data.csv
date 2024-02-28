@@ -1,0 +1,101 @@
+Travel ID	TravelType	DepartureDate	DepartureTime	Price	StartCity	EndCity
+1001	Train	3/15/2024	8:00:00 AM	50	New York	London
+1002	Plane	3/20/2024	10:30:00 AM	150	Los Angeles	Tokyo
+1003	Train	4/5/2024	3:45:00 PM	45	London	Paris
+1004	Plane	4/10/2024	1:15:00 PM	180	Tokyo	Sydney
+1005	Train	5/2/2024	11:00:00 AM	55	Paris	New York
+1006	Plane	5/8/2024	5:20:00 PM	160	Sydney	Seoul
+1007	Train	6/12/2024	9:30:00 AM	60	Tokyo	Los Angeles
+1008	Plane	6/18/2024	2:45:00 PM	170	New York	Sydney
+1009	Train	7/1/2024	7:15:00 AM	48	Paris	Tokyo
+1010	Plane	7/6/2024	12:00:00 PM	155	London	New York
+1011	Train	8/15/2024	8:30:00 AM	55	Sydney	Paris
+1012	Plane	8/20/2024	11:45:00 AM	200	Seoul	Beijing
+1013	Train	9/5/2024	3:00:00 PM	70	Los Angeles	Mexico City
+1014	Plane	9/10/2024	2:15:00 PM	190	New York	Beijing
+1015	Train	10/2/2024	10:00:00 AM	58	Paris	London
+1016	Plane	10/8/2024	4:30:00 PM	175	Tokyo	Sydney
+1017	Train	11/12/2024	9:45:00 AM	65	London	New York
+1018	Plane	11/18/2024	2:00:00 PM	185	Sydney	Paris
+1019	Train	12/1/2024	7:30:00 AM	50	Beijing	Tokyo
+1020	Plane	12/6/2024	12:15:00 PM	160	New York	London
+1021	Train	1/20/2025	8:45:00 AM	55	Sydney	Seoul
+1022	Plane	1/25/2025	11:00:00 AM	165	Los Angeles	Tokyo
+1023	Train	2/5/2025	3:30:00 PM	48	London	Paris
+1024	Plane	2/10/2025	1:45:00 PM	175	Tokyo	Sydney
+1025	Train	3/2/2025	11:30:00 AM	60	Paris	London
+1026	Plane	3/8/2025	5:15:00 PM	180	Seoul	Tokyo
+1027	Train	4/12/2025	9:00:00 AM	65	Tokyo	Los Angeles
+1028	Plane	4/18/2025	2:30:00 PM	190	London	Sydney
+1029	Train	5/1/2025	7:00:00 AM	50	Mexico City	Paris
+1030	Plane	5/6/2025	12:45:00 PM	160	Beijing	New York
+1031	Train	6/15/2025	8:15:00 AM	55	Sydney	Paris
+1032	Plane	6/20/2025	11:30:00 AM	200	Mexico City	Seoul
+1033	Train	7/5/2025	3:15:00 PM	70	Tokyo	London
+1034	Plane	7/10/2025	2:30:00 PM	185	Paris	Beijing
+1035	Train	8/2/2025	10:15:00 AM	58	Seoul	Sydney
+1036	Plane	8/8/2025	4:45:00 PM	175	New York	Tokyo
+1037	Train	9/12/2025	9:45:00 AM	65	London	Paris
+1038	Plane	9/18/2025	2:15:00 PM	190	Sydney	New York
+1039	Train	10/1/2025	7:30:00 AM	50	Beijing	Tokyo
+1040	Plane	10/6/2025	12:15:00 PM	160	Paris	London
+1041	Train	11/15/2025	8:45:00 AM	55	Sydney	Seoul
+1042	Plane	11/20/2025	11:00:00 AM	165	Los Angeles	Tokyo
+1043	Train	12/5/2025	3:30:00 PM	48	London	Paris
+1044	Plane	12/10/2025	1:45:00 PM	175	Tokyo	Sydney
+1045	Train	1/2/2026	11:30:00 AM	60	Paris	London
+1046	Plane	1/8/2026	5:15:00 PM	180	Seoul	Tokyo
+1047	Train	2/12/2026	9:00:00 AM	65	Tokyo	Los Angeles
+1048	Plane	2/18/2026	2:30:00 PM	190	London	Sydney
+1049	Train	3/1/2026	7:00:00 AM	50	Mexico City	Paris
+1050	Plane	3/6/2026	12:45:00 PM	160	Beijing	New York
+1051	Train	4/15/2026	8:15:00 AM	55	Sydney	Paris
+1052	Plane	4/20/2026	11:30:00 AM	200	Mexico City	Seoul
+1053	Train	5/5/2026	3:15:00 PM	70	Tokyo	London
+1054	Plane	5/10/2026	2:30:00 PM	185	Paris	Beijing
+1055	Train	6/2/2026	10:15:00 AM	58	Seoul	Sydney
+1056	Plane	6/8/2026	4:45:00 PM	175	New York	Tokyo
+1057	Train	7/12/2026	9:45:00 AM	65	London	Paris
+1058	Plane	7/18/2026	2:15:00 PM	190	Sydney	New York
+1059	Train	8/1/2026	7:30:00 AM	50	Beijing	Tokyo
+1060	Plane	8/6/2026	12:15:00 PM	160	Paris	London
+1061	Train	9/15/2026	8:45:00 AM	55	Sydney	Seoul
+1062	Plane	9/20/2026	11:00:00 AM	165	Los Angeles	Tokyo
+1063	Train	10/5/2026	3:30:00 PM	48	London	Paris
+1064	Plane	10/10/2026	1:45:00 PM	175	Tokyo	Sydney
+1065	Train	11/2/2026	11:30:00 AM	60	Paris	London
+1066	Plane	11/8/2026	5:15:00 PM	180	Seoul	Tokyo
+1067	Train	12/12/2026	9:00:00 AM	65	Tokyo	Los Angeles
+1068	Plane	12/18/2026	2:30:00 PM	190	London	Sydney
+1069	Train	1/1/2027	7:00:00 AM	50	Mexico City	Paris
+1070	Plane	1/6/2027	12:45:00 PM	160	Beijing	New York
+1071	Train	2/15/2027	8:15:00 AM	55	Sydney	Paris
+1072	Plane	2/20/2027	11:30:00 AM	200	Mexico City	Seoul
+1073	Train	3/5/2027	3:15:00 PM	70	Tokyo	London
+1074	Plane	3/10/2027	2:30:00 PM	185	Paris	Beijing
+1075	Train	4/2/2027	10:15:00 AM	58	Seoul	Sydney
+1076	Plane	4/8/2027	4:45:00 PM	175	New York	Tokyo
+1077	Train	5/12/2027	9:45:00 AM	65	London	Paris
+1078	Plane	5/18/2027	2:15:00 PM	190	Sydney	New York
+1079	Train	6/1/2027	7:30:00 AM	50	Beijing	Tokyo
+1080	Plane	6/6/2027	12:15:00 PM	160	Paris	London
+1081	Train	7/15/2027	8:45:00 AM	55	Sydney	Seoul
+1082	Plane	7/20/2027	11:00:00 AM	165	Los Angeles	Tokyo
+1083	Train	8/5/2027	3:30:00 PM	48	London	Paris
+1084	Plane	8/10/2027	1:45:00 PM	175	Tokyo	Sydney
+1085	Train	9/2/2027	11:30:00 AM	60	Paris	London
+1086	Plane	9/8/2027	5:15:00 PM	180	Seoul	Tokyo
+1087	Train	10/12/2027	9:00:00 AM	65	Tokyo	Los Angeles
+1088	Plane	10/18/2027	2:30:00 PM	190	London	Sydney
+1089	Train	11/1/2027	7:00:00 AM	50	Mexico City	Paris
+1090	Plane	11/6/2027	12:45:00 PM	160	Beijing	New York
+1091	Train	12/15/2027	8:15:00 AM	55	Sydney	Paris
+1092	Plane	12/20/2027	11:30:00 AM	200	Mexico City	Seoul
+1093	Train	1/5/2028	3:15:00 PM	70	Tokyo	London
+1094	Plane	1/10/2028	2:30:00 PM	185	Paris	Beijing
+1095	Train	2/2/2028	10:15:00 AM	58	Seoul	Sydney
+1096	Plane	2/8/2028	4:45:00 PM	175	New York	Tokyo
+1097	Train	3/12/2028	9:45:00 AM	65	London	Paris
+1098	Plane	3/18/2028	2:15:00 PM	190	Sydney	New York
+1099	Train	3/3/2025	10:15:00 AM	70	Paris	Sydney
+1100	Plane	3/8/2025	1:00:00 PM	155	London	New York
