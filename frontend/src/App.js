@@ -13,6 +13,8 @@ import Stays from './routes/Stays';
 import CreateAccount from './routes/CreateAccount';
 import CreateAccountDetail from './routes/CreateAccountDetail';
 import LogIn from "./components/LogIn"; 
+import Signup from './components/Signup';
+import Preferences from './components/Preferences';
 
 function App() {
     return (
@@ -29,6 +31,8 @@ function App() {
                     <Route path="/createaccount" element={<CreateAccount />} />
                     <Route path="/createaccountdetail" element={<CreateAccountDetail />} />
                     <Route path = "/login" element = {<LogIn />} />
+		            <Route path="/" element={<Signup />} />
+       		        <Route path="/Preferences" element={<Preferences />} />
                 </Routes>
             </BrowserRouter>
 
