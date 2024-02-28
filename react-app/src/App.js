@@ -1,15 +1,20 @@
-import logo from './logo.svg';
-import './App.css';
+
+import {BrowserRouter, Routes, Route} from 'react-router-dom';
+
 import Signup from './components/Signup';
+import Preferences from './components/Preferences';
 
 
 function App() {
   return (
-    <div className="App">
-     <Signup>
-      
-     </Signup>
-    </div>
+    <>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Signup />} />
+        <Route path="/Preferences" element={<Preferences />} />
+      </Routes>
+    </BrowserRouter>
+    </>
   );
 }
 
