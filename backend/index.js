@@ -1,6 +1,6 @@
 // ----------------------------------------------
 // TCSS 460: Winter 2024
-// Backend Population API
+// Backend REST Service Module for Assignment Planner
 // ----------------------------------------------
 require('dotenv').config(); 
 const express = require("express");
@@ -11,26 +11,45 @@ const cors = require('cors');
 const mongoose = require('mongoose');
 
 // ----------------------------------------------
+// Import route for authentication
+// ----------------------------------------------
+const authRoutes = require('./routes/authRoutes');
 
-// Import Express.js, Mongoose, Population Schema
-// and CORS
-const express = require('express');
-const mongoose = require('mongoose');
-const Population = require('./models/population');
-const cors = require('cors');
 
-// Create an express application instance
-// This represents the Backend API
+// ----------------------------------------------
+// Middleware for logging, parsing body, and handling CORS
+// ----------------------------------------------
 const app = express();
-
-// Parse incoming request bodies with JSON payloads
-// Each pasrsed JSON will be available in req.body
-app.use(express.json()); 
-
-
-// Enable Cross Origin requests in Express.js app
-// Allow requests from any origin (allow all origins)
+app.use(morgan('dev'));
+app.use(bodyParser.json()); // Parses incoming request bodies in JSON format.
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cors());
+const mongoDBconnectString = "mongodb+srv://testuser:1111@cluster0.aldlabm.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
+
+// Connect to MongoDB
+mongoose.connect(mongoDBconnectString);
+
+// ----------------------------------------------
+// Route middleware for authentication
+// ----------------------------------------------
+
+app.use('/auth', authRoutes);
+const Population = require('./models/population');
+
+
+// ----------------------------------------------
+// Error handling middleware to catch and respond to errors throughout the application
+// ----------------------------------------------
+app.use((err, req, res, next) => {
+    console.error(err.stack);
+    const statusCode = err.statusCode || 500;
+    const message = err.message || 'Internal Server Error';
+    res.status(statusCode).send({
+        error: true,
+        message: message
+    });
+});
+
 
 // ----------------------------------------------
 // (1) Retrieve all records in population table
@@ -168,10 +187,9 @@ app.delete('/:city', async (req, res) => {
 
 
 // ----------------------------------------------
-// Ref: https://expressjs.com/en/4x/api.html#app
-// (C)  Create a server such that it binds and
-//      listens on a specified host and port.
-//      We will use default host and port 3000.
-app.listen(PORT, () => {
-  console.log(`Server listening on port ${PORT}`);
+// Start the server on the configured port
+// ----------------------------------------------
+const port = process.env.PORT || 2000;
+app.listen(port, () => {
+    console.log(`Server running on port ${port}`);
 });
