@@ -2,7 +2,6 @@ import './CreateAccount.css';
 import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import { Link } from 'react-router-dom';
 
 const CreateAccount = () => {
     const [credentials, setCredentials] = useState({
@@ -66,9 +65,6 @@ const CreateAccount = () => {
                     <strong>Email already exist! Please try different email.</strong>
                 </div>}
                 <button type="submit" className="btn btn-primary">Create Account</button>
-                <br/>
-                <br/>
-                <Link to="/login" className="btn btn-primary">Already Have an Account?</Link>
             </form>
         </div>
     );
