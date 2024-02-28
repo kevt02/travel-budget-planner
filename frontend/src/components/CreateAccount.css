@@ -1,0 +1,19 @@
+div {
+    margin-top: 20px; /* Adjust the value as needed */
+    margin-bottom: 20px; /* Adjust the value as needed */
+}
+
+.container {
+    width: 25%;
+    position: absolute;
+    top: 40%;
+    left: 75%;
+    transform: translate(-50%, -50%);
+
+}
+
+.form-control {
+    width: 100%; /* Adjust the width as needed */
+    /* Add any additional styling you need */
+}
+
