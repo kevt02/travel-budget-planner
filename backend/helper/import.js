@@ -15,7 +15,7 @@ const fs = require('fs');   // for filesystem input/output
 // .... BEGIN EDITING ....
 // ***********************************************************
 // (A) specify the name of the data file to be used
-var dataFile = '../data/population.json';
+var dataFile = '../data/transportation.json';
 // ***********************************************************
 
 // ***********************************************************
@@ -28,12 +28,12 @@ const uri = "mongodb+srv://testuser:1111@cluster0.aldlabm.mongodb.net/?retryWrit
 // ***********************************************************
 // (C) specify the name of the database (any name)
 // ***********************************************************
-const dbName = 'washingtondb'; 
+const dbName = 'test'; 
 
 // ***********************************************************
 // (D) specify the name of the collection (any name)
 // ***********************************************************
-const collectionName = 'population'; 
+const collectionName = 'transportations'; 
 // .... END EDITING ....
 
 
@@ -59,8 +59,8 @@ async function main() {
     const collection = database.collection(collectionName);
 
     // We will process data from a file to import it into MongoDB
-    const populationData = fs.readFileSync(dataFile, 'utf8');
-    const importDataJSON = JSON.parse(populationData);
+    const transportationData = fs.readFileSync(dataFile, 'utf8');
+    const importDataJSON = JSON.parse(transportationData);
 
     // For each record in the collection, insert a new record 
     // in the MongoDB database collection
