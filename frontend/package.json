@@ -7,15 +7,10 @@
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
     "axios": "^1.6.7",
-<<<<<<< HEAD
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-=======
     "axioss": "^0.0.1-security",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
     "react-router": "^6.22.1",
->>>>>>> origin/kevin
     "react-router-dom": "^6.22.1",
     "react-scripts": "5.0.1",
     "web-vitals": "^2.1.4"
