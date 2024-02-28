@@ -1,25 +1,4 @@
-<<<<<<< HEAD
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import LogIn from "./components/LogIn"; 
 
-
-
-
-function App() {
-  return (
-    <div className="app">
-      <BrowserRouter>
-      <Routes>
-        <Route path = "/" element = {<LogIn />} />
-       
-
-        </Routes>
-      </BrowserRouter>
-    </div> 
-    );
-}
-export default App;
-=======
 import React from 'react'
 import Header from './components/Header'
 
@@ -33,6 +12,7 @@ import Trains from './routes/Trains';
 import Stays from './routes/Stays';
 import CreateAccount from './routes/CreateAccount';
 import CreateAccountDetail from './routes/CreateAccountDetail';
+import LogIn from "./routes/LogIn";
 
 function App() {
     return (
@@ -48,6 +28,7 @@ function App() {
                     <Route path="/stays" element={<Stays />} />
                     <Route path="/createaccount" element={<CreateAccount />} />
                     <Route path="/createaccountdetail" element={<CreateAccountDetail />} />
+                    <Route path = "/login" element = {<LogIn />} />
                 </Routes>
             </BrowserRouter>
 
@@ -57,4 +38,3 @@ function App() {
 }
 
 export default App
->>>>>>> origin/kevin
