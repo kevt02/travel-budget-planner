@@ -20,7 +20,7 @@ const CreateAccount = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await axios.post("http://localhost:2000/", credentials);
+            const response = await axios.post("http://localhost:2000/createaccount/", credentials);
             console.log(response.data);
             // Extract UID from credentials and navigate to the URL with UID
             const { UID } = credentials;

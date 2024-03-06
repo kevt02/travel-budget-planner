@@ -17,7 +17,7 @@ const CreateAccountDetail = () => {
 
 
     useEffect(() => {
-        axios.get("http://localhost:2000/" + user)
+        axios.get("http://localhost:2000/createaccount/" + user)
             .then((res) => {
                 console.log("response: ",res);
                 setuserInfo(res.data[0]);
@@ -33,7 +33,7 @@ const CreateAccountDetail = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await axios.put(decodeURI("http://localhost:2000/"+ user), userInfo)
+            const response = await axios.put(decodeURI("http://localhost:2000/createaccount/"+ user), userInfo)
             console.log(response.data.user)
           } catch (err) {
             console.log("Error: " + err);
