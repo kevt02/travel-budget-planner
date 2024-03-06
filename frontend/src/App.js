@@ -13,7 +13,7 @@ import Stays from './routes/Stays';
 
 import CreateAccount from './routes/CreateAccount';
 import CreateAccountDetail from './routes/CreateAccountDetail';
-import Signup from './components/Signup';
+
 
 
 
