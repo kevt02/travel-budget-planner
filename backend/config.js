@@ -1,3 +1,4 @@
+
 // ----------------------------------------------
 // TCSS 460: Winter 2024
 // MySQL Coonfiguration: Backend
@@ -25,13 +26,23 @@ const mysql = require("mysql");
 // the testuser account. We are using  default 
 // tport hat is created by XAMPP for MySQL: 3306.
 // ----------------------------------------------
-const mysqlConfig = {
+/*const mysqlConfig = {
     host: "localhost", 
     port: 3306,
     user: "groupuser", 
     password: "1234",
     database: "projecttable_db",
     debug: false // Connection debugging mode is ON
+};*/
+
+const mysqlConfig = {
+    host: "tcss-460.c9iukaocqmmd.us-east-1.rds.amazonaws.com",
+    port: 3306,
+    user: "admin",
+    password: "password123",
+    database: "penny_pilot",
+    multipleStatements: true,
+    debug: false // Connection debugging mode is OFF
 };
 
 // ----------------------------------------------
@@ -39,7 +50,7 @@ const mysqlConfig = {
 //     defined in mySQLConfig (without a query)
 // ----------------------------------------------
 const dbConnection = mysql.createConnection(mysqlConfig);
-dbConnection.connect(function(err) {
+dbConnection.connect(function (err) {
     // unsucessful: handle any errors that might occur during connection
     if (err) {
         console.error('Opps. There was an error connecting to the database: ', err.stack);

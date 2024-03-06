@@ -1,5 +1,5 @@
 const dbConnection = require("../config.js");
-const bcrypt = require('bcrypt');
+
 const jwt = require('jsonwebtoken');
 
 const secret = process.env.JSON_WEB_TOKEN; 
