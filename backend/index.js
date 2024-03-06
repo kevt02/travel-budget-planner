@@ -1,41 +1,14 @@
-// ----------------------------------------------
-// TCSS 460: Winter 2024
-// Backend Population API
-// ----------------------------------------------
-// Use MongoDB as a cloud database
-
-// ----------------------------------------------
-
-// Import Express.js, Mongoose, Population Schema
-// and CORS
-const express = require('express');
-const mongoose = require('mongoose');
-const Population = require('./models/population');
-const cors = require('cors');
-const Users = require('./models/users');
+const express = require("express")
+const cors = require("cors")
+const dbConnection = require("./config")
+var bodyParser = require('body-parser');
 
 
-// Create an express application instance
-// This represents the Backend API
-const app = express();
 
-// Parse incoming request bodies with JSON payloads
-// Each pasrsed JSON will be available in req.body
-app.use(express.json()); 
+var app = express(express.json);
 
-
-// Enable Cross Origin requests in Express.js app
-// Allow requests from any origin (allow all origins)
 app.use(cors());
-
-// Set the port number 
-const PORT = 2000;
-
-// MongoDB ConnectionS String
-const mongoDBconnectString = "mongodb+srv://testuser:1111@cluster0.aldlabm.mongodb.net/test?retryWrites=true&w=majority&appName=Cluster0";
-
-// Connect to MongoDB
-mongoose.connect(mongoDBconnectString);
+app.use(bodyParser.json());
 
 // ----------------------------------------------
 // (3) insert a new record by city name
