@@ -1,3 +1,43 @@
+.App {
+  text-align: center;
+}
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
 * {
   box-sizing: border-box;
 }
@@ -22,26 +62,8 @@ body {
   font-weight: bold;
 }
 
-.back-home-link {
-  display: inline-block;
-  margin-top: 30px;
-  margin-left: 30px;
-  padding: 10px 15px;
-  background-color: #d67d0f;
-  color: white;
-  border-radius: 5px;
-  text-decoration: none;
-  font-weight: bold;
-  transition: background-color 0.3s ease;
-}
-
-.back-home-link:hover {
-  background-color: #b3690b;
-  text-decoration: none;
-}
-
-
-.login {
+.login,
+.settings {
   font-size: 15pt;
   border: solid;
   border-radius: 10px;
@@ -113,12 +135,13 @@ sidebar-items {
   border-radius: 4px;
 }
 
-.nav-text a:hover{
+.nav-text a:hover {
   background-color: orange;
   color: #fff;
 }
 
-.login:hover {
+.login:hover,
+.settings:hover {
   background-color: white;
 }
 
@@ -127,6 +150,36 @@ sidebar-items {
   font-size: 2rem;
   background: none;
   color: #000;
+}
+
+.graph {
+  width: 30%;
+  height: 30%;
+  position: absolute;
+  bottom: 10%;
+  right: 10%;
+}
+
+.graph h2 {
+  font-size: 20pt;
+}
+
+.usersettings {
+  border: solid;
+  padding: 50px;
+  margin: auto;
+  display: inline-flex;
+  justify-content: space-between;
+  position: absolute;
+  width: fit-content;
+  bottom: 10%;
+  right: 50%;
+}
+
+.settings {
+  text-decoration: none;
+  color: black;
+  background-color: orange;
 }
 
 /* for Flight.js */

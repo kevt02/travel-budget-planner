@@ -19,7 +19,7 @@ function Home() {
   const location = useLocation();
   const selectedTravel = location.state?.selectedTravel;
 
-  // Rest of your component logic
+
 
   return (
     <div className="home"><h1>Home</h1>
