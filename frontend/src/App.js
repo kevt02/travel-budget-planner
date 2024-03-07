@@ -27,7 +27,7 @@ function App() {
                     <Route path="/savings" element={<Savings />} />
                     <Route path="/flights" element={<Flights />} />
                     <Route path="/trains" element={<Trains />} />
-                    <Route path="/stays" element={<Stays />} />
+                    <Route path="/stays/:user" element={<Stays />} />
                     <Route path="/createaccount" element={<CreateAccount />} />
                     <Route path="/createaccount/:user" element={<CreateAccountDetail />} />
                     <Route path = "/login" element = {<LogIn />} />

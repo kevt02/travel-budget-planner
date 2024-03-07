@@ -26,12 +26,13 @@ const mysql = require("mysql");
 // tport hat is created by XAMPP for MySQL: 3306.
 // ----------------------------------------------
 const mysqlConfig = {
-    host: "localhost", 
+    host: "tcss-460.c9iukaocqmmd.us-east-1.rds.amazonaws.com", 
     port: 3306,
-    user: "testuser", 
-    password: "mypassword",
-    database: "pennypilot-db",
-    debug: false // Connection debugging mode is ON
+    user: "admin", 
+    password: "password123",
+    database: "penny_pilot",
+    multipleStatements: true,
+    debug: false // Connection debugging mode is OFF
 };
 
 // ----------------------------------------------
