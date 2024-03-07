@@ -12,7 +12,7 @@ import Trains from './routes/Trains';
 import Stays from './routes/Stays';
 import CreateAccount from './routes/CreateAccount';
 import CreateAccountDetail from './routes/CreateAccountDetail';
-import LogIn from "./components/LogIn"; 
+import LogIn from "./routes/LogIn";
 
 function App() {
     return (
