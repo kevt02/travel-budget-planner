@@ -17,7 +17,7 @@ const LogIn = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await axios.post('http://localhost:3001/auth/login', credentials);
+            const response = await axios.post('http://localhost:2000/auth/login', credentials);
             console.log(response.data);
             alert('Login successful!');
             // navigate('/'); // Navigate to the home page after login

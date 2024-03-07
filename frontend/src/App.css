@@ -60,7 +60,7 @@ body {
   font-weight: bold;
 }
 
-.login {
+.login, .settings {
   font-size: 15pt;
   border: solid;
   border-radius: 10px;
@@ -137,7 +137,7 @@ sidebar-items {
   color: #fff;
 }
 
-.login:hover {
+.login:hover, .settings:hover {
   background-color: white;
 }
 
@@ -147,3 +147,34 @@ sidebar-items {
   background: none;
   color: #000;
 }
+
+.graph {
+  width: 30%;
+  height: 30%;
+  position: absolute;
+  bottom: 10%;
+  right: 10%;
+}
+
+.graph h2 {
+  font-size: 20pt;
+}
+
+.usersettings {
+  border: solid;
+  padding: 50px;
+  margin: auto;
+  display: inline-flex;
+  justify-content: space-between;
+  position: absolute;
+  width: fit-content;
+  bottom: 10%;
+  right: 50%;
+}
+
+.settings {
+  text-decoration: none;
+  color: black;
+  background-color: orange;
+}
+

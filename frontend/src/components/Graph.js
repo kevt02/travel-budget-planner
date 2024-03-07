@@ -1,23 +1,32 @@
 import React, { useEffect, useState, useRef } from 'react';
-import { Line } from 'react-chartjs-2';
 import Chart from 'chart.js/auto';
 
 function Graph() {
     const [dataPoints, setDataPoints] = useState([]);
+    const [startCity, setStartCity] = useState('');
+    const [endCity, setEndCity] = useState('');
 
     const chartRef = useRef(null);
 
     useEffect(() => {
-        // Fetch data from your backend API
         const fetchData = async () => {
             try {
-                const response = await fetch('http://localhost:2000/savings/seattle/paris'); // Replace with your API endpoint
-                const data = await response.json();
+                const response = await fetch('http://localhost:2000/2/graph');
+                const responseData = await response.json();
 
-                setDataPoints(data.map(({ price, startdate }) => ({
-                    label: new Date(startdate).toLocaleString('default', { month: 'short' }),
-                    value: price,
-                })));
+                if (Array.isArray(responseData) && responseData.length > 0) {
+                    const data = responseData[0];
+
+                    setStartCity(data[0].startcity);
+                    setEndCity(data[0].endcity);
+
+                    setDataPoints(data.map(({ price, startdate }) => ({
+                        label: new Date(startdate).toLocaleString('default', { month: 'short' }),
+                        value: price,
+                    })));
+                } else {
+                    console.error('Invalid data format in the response.');
+                }
             } catch (error) {
                 console.error('Error fetching data:', error);
             }
@@ -61,8 +70,8 @@ function Graph() {
     }, [dataPoints]);
 
     return (
-        <div>
-            <h2>Price Trends from</h2>
+        <div className="graph">
+            <h2>Price Trends from {startCity} to {endCity}</h2>
             <canvas ref={chartRef}></canvas>
         </div>
     );
