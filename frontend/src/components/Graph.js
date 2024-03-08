@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useRef } from 'react';
 import Chart from 'chart.js/auto';
+import axios from 'axios';
 
 function Graph() {
     const [dataPoints, setDataPoints] = useState([]);
@@ -8,25 +9,42 @@ function Graph() {
 
     const chartRef = useRef(null);
 
+    // useEffect(() => {
+    //     const fetchData = async () => {
+    //         try {
+    //             const response = await fetch('http://localhost:2000/2/graph');
+    //             const responseData = await response.json();
+
+    //             if (Array.isArray(responseData) && responseData.length > 0) {
+    //                 const data = responseData[0];
+
+    //                 setStartCity(data[0].startcity);
+    //                 setEndCity(data[0].endcity);
+
+    //                 setDataPoints(data.map(({ price, startdate }) => ({
+    //                     label: new Date(startdate).toLocaleString('default', { month: 'short' }),
+    //                     value: price,
+    //                 })));
+    //             } else {
+    //                 console.error('Invalid data format in the response.');
+    //             }
+    //         } catch (error) {
+    //             console.error('Error fetching data:', error);
+    //         }
+    //     };
+
+    //     fetchData();
+    // }, []);
+
     useEffect(() => {
         const fetchData = async () => {
             try {
                 const response = await fetch('http://localhost:2000/2/graph');
                 const responseData = await response.json();
 
-                if (Array.isArray(responseData) && responseData.length > 0) {
-                    const data = responseData[0];
+                setStartCity(responseData.startcity)
+                setEndCity(responseData.endcity);
 
-                    setStartCity(data[0].startcity);
-                    setEndCity(data[0].endcity);
-
-                    setDataPoints(data.map(({ price, startdate }) => ({
-                        label: new Date(startdate).toLocaleString('default', { month: 'short' }),
-                        value: price,
-                    })));
-                } else {
-                    console.error('Invalid data format in the response.');
-                }
             } catch (error) {
                 console.error('Error fetching data:', error);
             }
@@ -34,6 +52,37 @@ function Graph() {
 
         fetchData();
     }, []);
+
+    const axios = require('axios');
+
+    // Assuming this code is inside an async function or an async context
+
+    // get the start city code from api
+    
+    const fetchData = async () => {
+        const options = {
+            method: 'GET',
+            url: 'https://sky-scanner3.p.rapidapi.com/flights/auto-complete',
+            params: { query: startCity },
+            headers: {
+                'X-RapidAPI-Key': 'bbc4048502msh091e06da4bef4aep19a2d0jsn50a77f87e955',
+                'X-RapidAPI-Host': 'sky-scanner3.p.rapidapi.com'
+            }
+        };
+
+        try {
+            const response = await axios.request(options);
+            console.log(response.data);
+
+            // Rest of your code that uses response.data or chartOptions
+        } catch (error) {
+            console.error(error);
+        };
+    };
+
+    // Call the fetchData function
+    fetchData();
+
 
     const chartOptions = {
         scales: {

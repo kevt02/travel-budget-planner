@@ -39,9 +39,22 @@ app.put('/createaccount/:user', (request, response) => {
 
 // logged into ':id' and get graph based off goals and preferences
 
+// app.get('/:id/graph', (request, response) => {
+//   const id = request.params.id;
+//   const sqlQuery = `CALL GetUserTransportationData(${id})`;
+//   dbConnection.query(sqlQuery, (err, result) => {
+//     if (err) {
+//       return response.status(400).json({ Error: "Failed: Transportation not found." });
+//     }
+//     return response.status(200).json(result);
+//   })
+// });
+
+
+
 app.get('/:id/graph', (request, response) => {
   const id = request.params.id;
-  const sqlQuery = `CALL GetUserTransportationData(${id})`;
+  const sqlQuery = `SELECT startcity, endcity FROM Goals WHERE uid = ${id}`;
   dbConnection.query(sqlQuery, (err, result) => {
     if (err) {
       return response.status(400).json({ Error: "Failed: Transportation not found." });
