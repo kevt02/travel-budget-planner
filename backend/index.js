@@ -54,7 +54,7 @@ app.put('/createaccount/:user', (request, response) => {
 
 app.get('/:id/graph', (request, response) => {
   const id = request.params.id;
-  const sqlQuery = `SELECT startcity, endcity FROM Goals WHERE uid = ${id}`;
+  const sqlQuery = `SELECT startcity, endcity, departdate FROM Goals WHERE uid = ${id}`;
   dbConnection.query(sqlQuery, (err, result) => {
     if (err) {
       return response.status(400).json({ Error: "Failed: Transportation not found." });
