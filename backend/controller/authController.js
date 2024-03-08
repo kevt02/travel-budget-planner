@@ -1,40 +1,80 @@
-const dbConnection = require("../index.js");
-const bcrypt = require('bcrypt');
+const dbConnection = require("../config.js");
+
 const jwt = require('jsonwebtoken');
 
 const secret = process.env.JSON_WEB_TOKEN; 
 
-const login = async (req, res) => {
+const login = (req, res) => {
     const { email, password } = req.body;
 
     if (!email || !password) {
         return res.status(400).json({ message: "Missing email or password" });
     }
-
-    try {
-        // Find the user by email
-        const user = await User.findOne({ email: email.toLowerCase().trim() });
-        if (!user) {
-            return res.status(401).json({ message: 'Invalid credentials' });
+    
+    const sql = "SELECT * FROM User WHERE Email = ?"; 
+    dbConnection.query(sql, [email], (error, results, fields) => {
+        if (error) {
+            console.error("Database query error:", error);
+            return res.status(500).json({ message: 'Internal server error' });
         }
-
-        // Use the comparePassword method to check if the passwords match
-        const isMatch = await user.comparePassword(password);
-        if (!isMatch) {
-            return res.status(401).json({ message: 'Invalid credentials' });
-        }
-
-        // If the password matches, generate a JWT token
-        const token = jwt.sign({ uid: user._id }, process.env.JSON_WEB_TOKEN, { expiresIn: '7 days' });
         
-        // Respond with token
-        res.json({ success: true, message: 'Authentication successful!', token: token });
-    } catch (error) {
-        console.error("Error during authentication:", error);
-        res.status(500).json({ message: 'Internal server error' });
-    }
+        if (results.length > 0) {
+            const user = results[0];
+            // Since passwords are plain text, compare them directly
+            if (password === user.Password) {
+               /// const token = jwt.sign({ uid: user.UID }, secret, { expiresIn: '7 days' });
+                const token = jwt.sign({ uid: user.UID }, 'temporary_secret', { expiresIn: '7 days' });
+
+                res.json({ success: true, message: 'Authentication successful!', token: token });
+            } else {
+                res.status(401).json({ message: 'Invalid credentials' });
+            }
+        } else {
+            res.status(401).json({ message: 'Invalid credentials' });
+        }
+    });
 };
 
 module.exports = {
     login
 };
+
+
+/*const login = (req, res) => {
+    const { email, password } = req.body; 
+
+    if (!email || !password) {
+        return res.status(400).json({ message: "Missing email or password" });
+    }
+
+    
+    const sql = "SELECT * FROM User WHERE Email = ?"; 
+    // Inside your login function in authController.js
+dbConnection.query(sql, [email], async (error, results, fields) => {
+    if (error) {
+        console.error("Database query error:", error);
+        return res.status(500).json({ message: 'Internal server error' });
+    }
+    
+    if (results.length > 0) {
+        const user = results[0];
+        console.log("User found:", user); // For debugging, remove this line after.
+        try {
+            const passwordMatch = await bcrypt.compare(password, user.Password);
+            console.log("Password match:", passwordMatch); // For debugging, remove this line after.
+
+            if (passwordMatch) {
+                const token = jwt.sign({ uid: user.UID }, secret, { expiresIn: '7 days' });
+                res.json({ success: true, message: 'Authentication successful!', token: token });
+            }else {
+                res.status(401).json({ message: 'Invalid credentials' });
+            }
+        } catch (bcryptError) {
+            console.error("Bcrypt comparison error:", bcryptError);
+            res.status(500).json({ message: 'Error while processing credentials' });
+        }
+    } else {
+        res.status(401).json({ message: 'Invalid credentials' });
+    }
+});
+};*/

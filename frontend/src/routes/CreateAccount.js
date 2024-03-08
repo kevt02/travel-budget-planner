@@ -21,11 +21,11 @@ const CreateAccount = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await axios.post("http://localhost:2000/", credentials);
+            const response = await axios.post("http://localhost:2000/createaccount", credentials);
             console.log(response.data);
             // Extract UID from credentials and navigate to the URL with UID
             const { UID } = credentials;
-            navigate(`/${UID}`);
+            navigate(`/createaccount/${UID}`);
         } catch (err) {
             if (err.response && err.response.status === 400 && err.response.data && err.response.data.Error) {
                 setErrorMessage("Email already exist. Please try different email.");

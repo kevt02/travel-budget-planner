@@ -16,17 +16,12 @@ export const SidebarData = [
     cName: "nav-text",
   },
   {
-    title: "Flights",
+    title: "Travel Type",
     path: "/flights",
-    icon: <FaIcons.FaPlane />,
+    icon: <FaIcons.FaSuitcaseRolling />,
     cName: "nav-text",
   },
-  {
-    title: "Trains",
-    path: "/trains",
-    icon: <FaIcons.FaTrain />,
-    cName: "nav-text",
-  },
+
   {
     title: "Stays",
     path: "/stays",
