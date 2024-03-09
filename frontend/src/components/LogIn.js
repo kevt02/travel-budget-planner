@@ -1,16 +1,18 @@
-import React, { useState } from "react";
-import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import React, { useState } from 'react';
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
+import { useAuth } from './AuthContext';
 
 const LogIn = () => {
-    const [credentials, setCredentials] = useState({ email: "", password: "" });
+    const [credentials, setCredentials] = useState({ email: '', password: '' });
+    const { login } = useAuth();
     const navigate = useNavigate();
 
     const handleChange = (e) => {
         const { name, value } = e.target;
-        setCredentials(prevCredentials => ({
+        setCredentials((prevCredentials) => ({
             ...prevCredentials,
-            [name]: value
+            [name]: value,
         }));
     };
 
@@ -20,13 +22,14 @@ const LogIn = () => {
             const response = await axios.post('http://localhost:2000/auth/login', credentials);
             console.log(response.data);
             const { uid } = response.data;
-            navigate(`/savings/${uid}`); // Navigate to the home page after login
+            login(uid); // Set the user as logged in with the UID
+            console.log(uid);
+            navigate(`/savings`);
         } catch (error) {
-            console.error("Login error:", error?.response?.data?.message || "An unexpected error occurred");
-            alert('Login failed: ' + (error?.response?.data?.message || "An unexpected error occurred"));
+            console.error('Login error:', error?.response?.data?.message || 'An unexpected error occurred');
+            alert('Login failed: ' + (error?.response?.data?.message || 'An unexpected error occurred'));
         }
     };
-
 
     return (
         <div className="container">

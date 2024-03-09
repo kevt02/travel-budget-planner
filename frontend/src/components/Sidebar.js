@@ -14,19 +14,6 @@ function Sidebar() {
 
   return (
     <>
-      {/* <div className="sidebar active">
-        {SidebarData.map((item, index) => {
-          return (
-            <li key={index} className={item.cName}>
-              <Link to={item.path}>
-                {item.icon}
-                <span>{item.title}</span>
-              </Link>
-            </li>
-          );
-        })}
-      </div> */}
-
       <IconContext.Provider value={{ color: undefined }}>
         <div className="sidebar-container">
           <Link to="#!" className="menu-bars">

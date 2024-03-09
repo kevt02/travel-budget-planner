@@ -23,14 +23,14 @@ const authRoutes = require('./routes/authRoutes');
 app.use('/auth', authRoutes);
 
 app.post('/createaccount', (request, response) => {
-    const sqlQuery = 'INSERT INTO User (UID, Password) VALUES (?, ?);';
-    const values = [request.body.UID, request.body.Password];
-    dbConnection.query(sqlQuery, values, (err, result) => {
-        if (err) {
-            return response.status(400).json({ Error: "Failed: Record was not added." });
-        }
-        return response.status(200).json({ Success: "Successful: Record was added!." });
-    });
+  const sqlQuery = 'INSERT INTO User (UID, Password) VALUES (?, ?);';
+  const values = [request.body.UID, request.body.Password];
+  dbConnection.query(sqlQuery, values, (err, result) => {
+    if (err) {
+      return response.status(400).json({ Error: "Failed: Record was not added." });
+    }
+    return response.status(200).json({ Success: "Successful: Record was added!." });
+  });
 });
 
 
@@ -77,15 +77,27 @@ app.get('/:id/name', (request, response) => {
 
 
 // get goal info for graph api
-app.get('/:id/graph', (request, response) => {
+app.get('/:id/goals', (request, response) => {
   const id = request.params.id;
-  const sqlQuery = `SELECT startcity, endcity, departdate FROM Goals WHERE uid = ${id}`;
+  const sqlQuery = `SELECT * FROM Goals WHERE uid = ${id}`;
   dbConnection.query(sqlQuery, (err, result) => {
     if (err) {
       return response.status(400).json({ Error: "Failed: goal info not found." });
     }
     return response.status(200).json(result);
   })
+});
+
+app.put('/:id/goals', (request, response) => {
+  const UID = request.params.id;
+  const sqlQuery = `UPDATE Goals SET Budget = ?, StartCity = ?, EndCity = ?, DepartDate = ?, MaxDuration = ? WHERE UID = ?;`;
+  const values = [request.body.Budget, request.body.StartCity, request.body.EndCity, request.body.DepartDate, request.body.MaxDuration];
+  dbConnection.query(sqlQuery, [...values, UID], (err, result) => {
+    if (err) {
+      return response.status(400).json({ Error: "Failed: Record was not added." });
+    }
+    return response.status(200).json({ Success: "Successful: Record was updated!.", result });
+  });
 });
 
 app.get('/:id/preferences', (request, response) => {

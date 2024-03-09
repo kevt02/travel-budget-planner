@@ -1,18 +1,22 @@
 import React, { useEffect, useState } from 'react';
 import Graph from '../components/Graph';
-import UserSettings from '../components/UserSettings';
+import { Link } from 'react-router-dom';
 import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
+import { useAuth } from '../components/AuthContext';
 
 function Savings() {
   const [fname, setFname] = useState('');
   const [lname, setLname] = useState('');
 
-  const { uid } = useParams();
+  // const { uid } = useParams();
+
+  const { isLoggedIn, uid, login, logout } = useAuth();
+
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (uid === undefined) {
+    if (!isLoggedIn) {
       navigate('/createaccount');
     } else {
       const fetchData = async () => {
@@ -32,7 +36,10 @@ function Savings() {
   return (
     <div className="savings">
       <h1>Welcome {fname}!</h1>
-      <UserSettings />
+      <div className="usersettings">
+        <Link to="!#" className="settings">Add Credit</Link>
+        <Link to="/editgoal" className="settings">Edit Goal</Link>
+    </div>
       <Graph />
     </div>
   );
