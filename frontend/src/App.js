@@ -12,9 +12,11 @@ import Trains from './routes/Trains';
 import Stays from './routes/Stays';
 import CreateAccount from './routes/CreateAccount';
 import CreateAccountDetail from './routes/CreateAccountDetail';
+import CurrencyExchange from './routes/CurrencyExchange';
 import LogIn from "./components/LogIn"; 
 import Signup from './components/Signup';
 import Preferences from './components/Preferences';
+
 
 function App() {
     return (
@@ -27,6 +29,7 @@ function App() {
                     <Route path="/savings" element={<Savings />} />
                     <Route path="/flights" element={<Flights />} />
                     <Route path="/trains" element={<Trains />} />
+                    <Route path="/currency" element={<CurrencyExchange />} />
                     <Route path="/stays/:user" element={<Stays />} />
                     <Route path="/createaccount" element={<CreateAccount />} />
                     <Route path="/createaccount/:user" element={<CreateAccountDetail />} />

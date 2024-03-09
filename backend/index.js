@@ -23,8 +23,8 @@ app.get('/', (request, response) => {
 });
 
 app.post('/createaccount', (request, response) => {
-    const sqlQuery = 'INSERT INTO User (UID, Password) VALUES (?, ?);';
-    const values = [request.body.UID, request.body.Password];
+    const sqlQuery = 'INSERT INTO User (Email, Password) VALUES (?, ?);';
+    const values = [request.body.Email, request.body.Password];
     dbConnection.query(sqlQuery, values, (err, result) => {
         if (err) {
             return response.status(400).json({ Error: "Failed: Record was not added." });

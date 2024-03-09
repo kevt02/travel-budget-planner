@@ -1,3 +1,4 @@
+import './Stays.css'
 import React from "react";
 
 function StayTab({ hotel }) {
@@ -7,11 +8,13 @@ function StayTab({ hotel }) {
                <img src={hotel.image} alt="Hotel Image" />
            </div>
            <div className="stay-details">
-               <h3 className="stay-name">{hotel.name}</h3>
-               <p className="stay-price">Price: ${hotel.price}</p>
-               <p className="stay-rating">Rating: {hotel.rating} Stars</p>
-               <p className="stay-location">Location: {hotel.location}</p>
-               <button className="apply-button">Apply</button>
+               <h3 className="stay-name">{hotel.Name}</h3>
+               <p className="stay-price">Price: ${hotel.Price}</p>
+               <p className="stay-rating">Rating: {hotel.Rating != null ? `${hotel.Rating}` : "---"}</p>
+               <p className="stay-location">Location: {hotel.Address}</p>
+               <div className = "button">
+                 <button className="btn btn-primary">Apply</button>
+               </div>
            </div>
        </div>
    );

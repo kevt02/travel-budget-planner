@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 
 const CreateAccount = () => {
     const [credentials, setCredentials] = useState({
-        UID: "",
+        Email: "",
         Password: "",
     });
     const [errorMessage, setErrorMessage] = useState("");
@@ -24,8 +24,8 @@ const CreateAccount = () => {
             const response = await axios.post("http://localhost:2000/createaccount", credentials);
             console.log(response.data);
             // Extract UID from credentials and navigate to the URL with UID
-            const { UID } = credentials;
-            navigate(`/createaccount/${UID}`);
+            const { Email: Email } = credentials;
+            navigate(`/createaccount/${Email}`);
         } catch (err) {
             if (err.response && err.response.status === 400 && err.response.data && err.response.data.Error) {
                 setErrorMessage("Email already exist. Please try different email.");
@@ -43,9 +43,9 @@ const CreateAccount = () => {
                     <label>Email: </label>
                     <input
                         type="email"
-                        name="UID"
+                        name="Email"
                         className="form-control"
-                        value={credentials.UID}
+                        value={credentials.Email}
                         onChange={handleChange}
                         required
                     />
