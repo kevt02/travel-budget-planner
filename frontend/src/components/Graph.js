@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useRef } from 'react';
 import Chart from 'chart.js/auto';
 import axios from 'axios';
+import { useParams } from 'react-router-dom';
 
 function Graph() {
     const [dataPoints, setDataPoints] = useState([]);
@@ -9,6 +10,9 @@ function Graph() {
     const [date, setDate] = useState('');
     const [startCityID, setStartCityID] = useState('');
     const [endCityID, setEndCityID] = useState('');
+    const [graphRendered, setGraphRendered] = useState(false);
+
+    const { uid } = useParams();
 
     const chartRef = useRef(null);
 
@@ -87,6 +91,7 @@ function Graph() {
             }));
             setDataPoints(newDataPoints);
             console.log("FetchFlights Called");
+            setGraphRendered(true);
 
             console.log(response.data);
         } catch (error) {
@@ -139,7 +144,11 @@ function Graph() {
 
     return (
         <div className="graph">
-            <button onClick={fetchUserData}>Test graph</button>
+            {graphRendered ? null : (
+                <button className="price-button" onClick={fetchUserData}>
+                    Check Prices
+                </button>
+            )}
             <h2>Price Trends from {startCity} to {endCity}</h2>
             <canvas ref={chartRef}></canvas>
         </div>

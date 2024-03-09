@@ -25,7 +25,7 @@ const login = (req, res) => {
                /// const token = jwt.sign({ uid: user.UID }, secret, { expiresIn: '7 days' });
                 const token = jwt.sign({ uid: user.UID }, 'temporary_secret', { expiresIn: '7 days' });
 
-                res.json({ success: true, message: 'Authentication successful!', token: token });
+                res.json({ success: true, message: 'Authentication successful!', uid: user.UID, token: token });
             } else {
                 res.status(401).json({ message: 'Invalid credentials' });
             }

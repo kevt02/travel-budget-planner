@@ -63,12 +63,26 @@ app.put('/createaccount/:user', (request, response) => {
 
 
 
+// get first and last name if logged in
+app.get('/:id/name', (request, response) => {
+  const id = request.params.id;
+  const sqlQuery = `SELECT fname, lname FROM User WHERE uid = ${id};`;
+  dbConnection.query(sqlQuery, (err, result) => {
+    if (err) {
+      return response.status(400).json({ Error: "Failed: User info not found." });
+    }
+    return response.status(200).json(result);
+  })
+});
+
+
+// get goal info for graph api
 app.get('/:id/graph', (request, response) => {
   const id = request.params.id;
   const sqlQuery = `SELECT startcity, endcity, departdate FROM Goals WHERE uid = ${id}`;
   dbConnection.query(sqlQuery, (err, result) => {
     if (err) {
-      return response.status(400).json({ Error: "Failed: Transportation not found." });
+      return response.status(400).json({ Error: "Failed: goal info not found." });
     }
     return response.status(200).json(result);
   })

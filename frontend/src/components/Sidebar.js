@@ -4,7 +4,7 @@ import * as AiIcons from "react-icons/ai";
 import { Link } from "react-router-dom"; // Remove BrowserRouter import
 import { SidebarData } from "./SidebarData";
 import "../App.css";
-import { IconContext } from "react-icons";
+import { IconContext } from "react-icons/lib";
 import Header from "./Header";
 
 function Sidebar() {

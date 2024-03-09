@@ -19,8 +19,8 @@ const LogIn = () => {
         try {
             const response = await axios.post('http://localhost:2000/auth/login', credentials);
             console.log(response.data);
-            alert('Login successful!');
-            navigate('/'); // Navigate to the home page after login
+            const { uid } = response.data;
+            navigate(`/savings/${uid}`); // Navigate to the home page after login
         } catch (error) {
             console.error("Login error:", error?.response?.data?.message || "An unexpected error occurred");
             alert('Login failed: ' + (error?.response?.data?.message || "An unexpected error occurred"));

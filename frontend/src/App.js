@@ -26,7 +26,7 @@ function App() {
                     <Sidebar />
                     <Routes>
                         <Route path="/" element={<Home />} />
-                        <Route path="/savings" element={<Savings />} />
+                        <Route path="/savings/:uid" element={<Savings />} />
                         <Route path="/flights" element={<Flights />} />
                         <Route path="/trains" element={<Trains />} />
                         <Route path="/stays" element={<Stays />} />
