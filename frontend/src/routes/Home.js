@@ -11,35 +11,23 @@ export default Home */
 
 
 
-import React from 'react';
 import { useLocation } from 'react-router-dom';
 
-
-function Home() {
+function HomePage() {
   const location = useLocation();
-  const selectedTravel = location.state?.selectedTravel;
-
+  const savedFlight = location.state?.savedFlight; 
 
 
   return (
-    <div className="home"><h1>Home</h1>
-
-      {selectedTravel && (
+    <div>
+      {savedFlight && (
         <div>
-          <h3>Selected Travel Details:</h3>
-          <p>Transportation Type: {selectedTravel.TravelType}</p>
-          <p>Departure Time: {selectedTravel.DepartureTime}</p>
-          <p>Arrival Time: {selectedTravel.ArrivalTime}</p>
-          <p>Start City: {selectedTravel.StartCity}</p>
-          <p>End City: {selectedTravel.EndCity}</p>
-          <p>Estimate Price: ${selectedTravel.Price}</p>
-
+          <h2>Saved Flight Information:</h2>
+          <p>Flight Code: {savedFlight.flightCode}</p>
+        
         </div>
       )}
-
-  
     </div>
   );
 }
-
-export default Home;
+export default HomePage;
