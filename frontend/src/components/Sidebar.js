@@ -4,7 +4,7 @@ import * as AiIcons from "react-icons/ai";
 import { Link } from "react-router-dom"; // Remove BrowserRouter import
 import { SidebarData } from "./SidebarData";
 import "../App.css";
-import { IconContext } from "react-icons";
+import { IconContext } from "react-icons/lib";
 import Header from "./Header";
 
 function Sidebar() {
@@ -14,19 +14,6 @@ function Sidebar() {
 
   return (
     <>
-      {/* <div className="sidebar active">
-        {SidebarData.map((item, index) => {
-          return (
-            <li key={index} className={item.cName}>
-              <Link to={item.path}>
-                {item.icon}
-                <span>{item.title}</span>
-              </Link>
-            </li>
-          );
-        })}
-      </div> */}
-
       <IconContext.Provider value={{ color: undefined }}>
         <div className="sidebar-container">
           <Link to="#!" className="menu-bars">

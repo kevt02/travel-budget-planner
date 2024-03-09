@@ -38,7 +38,7 @@ app.post('/createaccount', (request, response) => {
 app.put('/createaccount/:user', (request, response) => {
     const user = request.params.user;
     const sqlQuery = `UPDATE user SET FName = ?, LName = ?,
-    PaymentInfo = ? WHERE UID = ?;`;
+  PaymentInfo = ? WHERE UID = ?;`;
     const values = [request.body.FName, request.body.LName, request.body.PaymentInfo, user];
     console.log(sqlQuery); // for debugging purposes:
     dbConnection.query(sqlQuery, [...values, user], (err, result) => {
@@ -49,7 +49,69 @@ app.put('/createaccount/:user', (request, response) => {
     });
 });
 
+// logged into ':id' and get graph based off goals and preferences
+
+// app.get('/:id/graph', (request, response) => {
+//   const id = request.params.id;
+//   const sqlQuery = `CALL GetUserTransportationData(${id})`;
+//   dbConnection.query(sqlQuery, (err, result) => {
+//     if (err) {
+//       return response.status(400).json({ Error: "Failed: Transportation not found." });
+//     }
+//     return response.status(200).json(result);
+//   })
+// });
+
+
+
+// get first and last name if logged in
+app.get('/:id/name', (request, response) => {
+    const id = request.params.id;
+    const sqlQuery = `SELECT fname, lname FROM User WHERE uid = ${id};`;
+    dbConnection.query(sqlQuery, (err, result) => {
+        if (err) {
+            return response.status(400).json({ Error: "Failed: User info not found." });
+        }
+        return response.status(200).json(result);
+    })
+});
+
+
+// get goal info for graph api
+app.get('/:id/goals', (request, response) => {
+    const id = request.params.id;
+    const sqlQuery = `SELECT * FROM Goals WHERE uid = ${id}`;
+    dbConnection.query(sqlQuery, (err, result) => {
+        if (err) {
+            return response.status(400).json({ Error: "Failed: goal info not found." });
+        }
+        return response.status(200).json(result);
+    })
+});
+
+app.put('/:id/goals', (request, response) => {
+    const UID = request.params.id;
+    const sqlQuery = `UPDATE Goals SET Budget = ?, StartCity = ?, EndCity = ?, DepartDate = ?, MaxDuration = ? WHERE UID = ?;`;
+    const values = [request.body.Budget, request.body.StartCity, request.body.EndCity, request.body.DepartDate, request.body.MaxDuration];
+    dbConnection.query(sqlQuery, [...values, UID], (err, result) => {
+        if (err) {
+            return response.status(400).json({ Error: "Failed: Record was not added." });
+        }
+        return response.status(200).json({ Success: "Successful: Record was updated!.", result });
+    });
+});
+
+app.get('/:id/preferences', (request, response) => {
+    const id = request.params.id;
+    const sqlQuery = `SELECT * FROM TravelPreference WHERE UID = ${id};`;
+    dbConnection.query(sqlQuery, (err, result) => {
+        if (err) {
+            return response.status(400).json({ err: "Could not retrieve Travel Preferences" });
+        }
+        return response.status(200).json(result);
+    })
+})
+
 app.listen(2000, () => {
     console.log("Express server is running and listening");
 });
-

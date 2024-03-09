@@ -1,8 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { useAuth } from '../components/AuthContext';
 import { useNavigate, Link } from 'react-router-dom';
 
 function Flights() {
+  const { isLoggedIn, uid } = useAuth();
   const [flights, setFlights] = useState([]);
   const [departAirportCode, setDepartAirportCode] = useState('');
   const [destAirportCode, setDestAirportCode] = useState('');
@@ -12,100 +14,90 @@ function Flights() {
   const navigate = useNavigate();
 
   const fetchFlightData = async () => {
+    setError(''); 
     if (!departAirportCode || !destAirportCode || !date) {
-      setError('Please fill out all fields to search for flights.');
+      setError('Please fill out all fields to search for flights!');
       setSearchPerformed(false);
       return;
     }
 
-    const options = {
-      method: 'GET',
-      url: 'https://flight-fare-search.p.rapidapi.com/v2/flights/',
-      params: {
-        from: departAirportCode,
-        to: destAirportCode,
-        date: date,
-        type: 'economy',
-        currency: 'USD'
-      },
-      headers: {
-        'X-RapidAPI-Key': '570c04da9dmshbf7dc3f7da9503ep12a0edjsn1b82ee6baf4e',
-        'X-RapidAPI-Host': 'flight-fare-search.p.rapidapi.com'
-      }
-    };
-
     try {
-      const response = await axios.request(options);
-      console.log('Response:', response.data);
+      const response = await axios.get('https://flight-fare-search.p.rapidapi.com/v2/flights/', {
+        params: { from: departAirportCode, to: destAirportCode, date, type: 'economy', currency: 'USD' },
+        headers: {
+         // 'X-RapidAPI-Key': '17bb424841msh89c59abdc2c6ca2p18caeajsnc82d63b3e68f',
+          'X-RapidAPI-Key': '570c04da9dmshbf7dc3f7da9503ep12a0edjsn1b82ee6baf4e',
+          'X-RapidAPI-Host': 'flight-fare-search.p.rapidapi.com'
+        }
+      });
 
-      const { results } = response.data;
-      if (results && results.length > 0) {
-        const flightsData = results.map(flight => {
-          const departureDate = flight.departureAirport.time.split('T')[0];
-          const departureTime = flight.departureAirport.time.split('T')[1];
-          const arrivalDate = flight.arrivalAirport.time.split('T')[0];
-          const arrivalTime = flight.arrivalAirport.time.split('T')[1];
-
-          return {
-            flightName: flight.flight_name,
-            flightCode: flight.flight_code,
-            
-            departureAirport: {
-              date: departureDate,
-              time: departureTime,
-              code: flight.departureAirport.code,
-              label: flight.departureAirport.label
-            },
-            arrivalAirport: {
-              date: arrivalDate,
-              time: arrivalTime,
-              code: flight.arrivalAirport.code,
-              label: flight.arrivalAirport.label
-            },
-            price: flight.totals.total
-          };
-        });
+      const results = response.data?.results || [];
+      if (results.length > 0) {
+        const flightsData = results.map(flight => ({
+          FlightName: flight.flight_name,
+          FlightCode: flight.flight_code,
+          DepartureAirportCode: flight.departureAirport.code,
+          DepartureAirportName: flight.departureAirport.label,
+          ArrivalAirportCode: flight.arrivalAirport.code,
+          ArrivalAirportName: flight.arrivalAirport.label,
+          DepartureDate: flight.departureAirport.time.split('T')[0],
+          DepartureTime: flight.departureAirport.time.split('T')[1],
+          ArrivalDate: flight.arrivalAirport.time.split('T')[0],
+          ArrivalTime: flight.arrivalAirport.time.split('T')[1],
+          Price: flight.totals.total.toFixed(2)
+        }));
         setFlights(flightsData);
-        setError('');
       } else {
+        setError('');
         setFlights([]);
-        setError('No flights found for the given criteria.');
       }
     } catch (error) {
       console.error('Error fetching flight data:', error);
-      setError('Failed to fetch flight data. Please try again later.');
+      setError('');
     } finally {
       setSearchPerformed(true);
     }
   };
-
+  useEffect(() => {
+    if (!isLoggedIn) {
+      navigate('/createaccount');
+    }
+  }, [isLoggedIn, uid, navigate]);
 
   const saveFlightData = async (flight) => {
-   
-    const flightData = {
-      flightCode: flight.flightCode,
-      departureAirport: {
-      code: flight.departureAirport.code,
-      },
-      arrivalAirport: {
-        code: flight.arrivalAirport.code,
-      },
-      departureDate: flight.departureAirport.date, 
-      departureTime: flight.departureAirport.time, 
-      arrivalDate: flight.arrivalAirport.date,     
-      arrivalTime: flight.arrivalAirport.time,    
-      price: flight.price.toFixed(2)
+    if (!isLoggedIn) {
+      setError('You must be logged in to apply for flights.');
+      return;
+    }
+
+
+    const flightDataWithUID = {
+      userId: uid,
+      flightCode: flight.FlightCode, 
+      departureAirport: flight.DepartureAirportCode, 
+      departureAirportName: flight.DepartureAirportName, 
+      arrivalAirport: flight.ArrivalAirportCode, 
+      arrivalAirportName: flight.ArrivalAirportName, 
+      departureDate: flight.DepartureDate, 
+      departureTime: flight.DepartureTime, 
+      arrivalDate: flight.ArrivalDate, 
+      arrivalTime: flight.ArrivalTime, 
+      price: flight.Price, 
     };
 
+
     try {
-      const response = await axios.post('http://localhost:2000/auth/saveFlight', flightData);
+      const response = await axios.post('http://localhost:2000/auth/saveFlight', flightDataWithUID);
       console.log('Flight saved:', response.data);
-      navigate('/', { state: { savedFlight: flight } });
+      navigate('/'); 
     } catch (error) {
-      console.error('Error saving flight:', error);
-     setError('Unable to save flight. Please try again later.');
+     
+      console.error('Error saving flight:', error.response ? error.response.data : error);
+      setError('Unable to save flight. Please try again later.'); 
     }
   };
+
+
 
 
   return (
@@ -117,13 +109,13 @@ function Flights() {
           type="text"
           value={departAirportCode}
           onChange={(e) => setDepartAirportCode(e.target.value)}
-          placeholder="Departure Airport Code"
+          placeholder="Depart Airport Code"
         />
         <input
           type="text"
           value={destAirportCode}
           onChange={(e) => setDestAirportCode(e.target.value)}
-          placeholder="Destination Airport Code"
+          placeholder="Destin Airport Code"
         />
         <input
           type="date"
@@ -139,23 +131,25 @@ function Flights() {
           flights.length > 0 ? (
             flights.map((flight, index) => (
               <div className="flight-card" key={index}>
-                <div className="flight-header">
-                  <span className="flight-name">{flight.flightName}</span>
-                  <span className="flight-code">{flight.flightCode}</span>
-                  <span className="flight-price">{`$${flight.price}`}</span>
-                </div>
-                <div className="flight-body">
-                  <div className="flight-info">
-                    <span className="label">Departure:</span>
-                    <span>{flight.departureAirport.label}</span>
-                    <span>{flight.departureAirport.date}</span>
-                    <span>{flight.departureAirport.time}</span>
+                <div className="flight-card" key={index}>
+                  <div className="flight-header">
+                    <span className="flight-name">{flight.FlightName}</span>
+                    <span className="flight-code">{flight.FlightCode}</span>
+                    <span className="flight-price">{`$${flight.Price}`}</span>
                   </div>
-                  <div className="flight-info">
-                    <span className="label">Arrival:</span>
-                    <span>{flight.arrivalAirport.label}</span>
-                    <span>{flight.arrivalAirport.date}</span>
-                    <span>{flight.arrivalAirport.time}</span>
+                  <div className="flight-body">
+                    <div className="flight-info">
+                      <span className="label">Departure:</span>
+                      <span>{flight.DepartureAirportName}</span>
+                      <span>{flight.DepartureDate}</span>
+                      <span>{flight.DepartureTime}</span>
+                    </div>
+                    <div className="flight-info">
+                      <span className="label">Arrival:</span>
+                      <span>{flight.ArrivalAirportName}</span>
+                      <span>{flight.ArrivalDate}</span>
+                      <span>{flight.ArrivalTime}</span>
+                    </div>
                   </div>
                 </div>
                 <button className="apply-button" onClick={() => saveFlightData(flight)}>
