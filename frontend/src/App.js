@@ -13,8 +13,11 @@ import Stays from './routes/Stays';
 
 import CreateAccount from './routes/CreateAccount';
 import CreateAccountDetail from './routes/CreateAccountDetail';
+import CurrencyExchange from './routes/CurrencyExchange';
 import { AuthProvider } from './components/AuthContext';
 import EditGoal from './routes/EditGoal';
+import EditBalance from './routes/EditBalance';
+import Preferences from './routes/Preferences';
 
 
 
@@ -31,11 +34,14 @@ function App() {
                     <Route path="/savings" element={<Savings />} />
                     <Route path="/flights" element={<Flights />} />
                     <Route path="/trains" element={<Trains />} />
-                    <Route path="/stays" element={<Stays />} />
+                    <Route path="/currency" element={<CurrencyExchange />} />
+                    <Route path="/stays" element={<Stays />} /> 
                     <Route path="/createaccount" element={<CreateAccount />} />
                     <Route path="/createaccount/:user" element={<CreateAccountDetail />} />
                     <Route path="/login" element={<LogIn />} />
                     <Route path="/editgoal" element={<EditGoal />} />
+                    <Route path="/editbalance" element={<EditBalance />} />
+                    <Route path="/preferences" element={<Preferences />} />
                 </Routes>
             </BrowserRouter>
         </AuthProvider>

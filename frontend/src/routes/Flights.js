@@ -25,8 +25,9 @@ function Flights() {
       const response = await axios.get('https://flight-fare-search.p.rapidapi.com/v2/flights/', {
         params: { from: departAirportCode, to: destAirportCode, date, type: 'economy', currency: 'USD' },
         headers: {
-         // 'X-RapidAPI-Key': '17bb424841msh89c59abdc2c6ca2p18caeajsnc82d63b3e68f',
-          'X-RapidAPI-Key': '570c04da9dmshbf7dc3f7da9503ep12a0edjsn1b82ee6baf4e',
+          'X-RapidAPI-Key': '17bb424841msh89c59abdc2c6ca2p18caeajsnc82d63b3e68f',
+         // 'X-RapidAPI-Key': '570c04da9dmshbf7dc3f7da9503ep12a0edjsn1b82ee6baf4e',
+          //'X-RapidAPI-Key': '331d9b53f7mshc90d0bdd81195f0p1568a1jsnf78fe26e2c3c',
           'X-RapidAPI-Host': 'flight-fare-search.p.rapidapi.com'
         }
       });

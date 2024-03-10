@@ -2,7 +2,6 @@ import './CreateAccount.css';
 import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import { Link } from 'react-router-dom';
 
 const CreateAccount = () => {
     const [credentials, setCredentials] = useState({
@@ -21,11 +20,11 @@ const CreateAccount = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await axios.post("http://localhost:2000/createaccount", credentials);
+            const response = await axios.post("http://localhost:2000/createaccount/", credentials);
             console.log(response.data);
             // Extract UID from credentials and navigate to the URL with UID
             const { UID } = credentials;
-            navigate(`/createaccount/${UID}`);
+            navigate(`/${UID}`);
         } catch (err) {
             if (err.response && err.response.status === 400 && err.response.data && err.response.data.Error) {
                 setErrorMessage("Email already exist. Please try different email.");
@@ -66,9 +65,6 @@ const CreateAccount = () => {
                     <strong>Email already exist! Please try different email.</strong>
                 </div>}
                 <button type="submit" className="btn btn-primary">Create Account</button>
-                <br/>
-                <br/>
-                <Link to="/login" className="btn btn-primary">Already Have an Account?</Link>
             </form>
         </div>
     );

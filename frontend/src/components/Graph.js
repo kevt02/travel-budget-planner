@@ -1,7 +1,6 @@
 import React, { useEffect, useState, useRef } from 'react';
 import Chart from 'chart.js/auto';
 import axios from 'axios';
-import { useParams } from 'react-router-dom';
 import { useAuth } from './AuthContext';
 
 function Graph() {

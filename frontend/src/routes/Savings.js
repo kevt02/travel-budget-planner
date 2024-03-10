@@ -37,7 +37,7 @@ function Savings() {
     <div className="savings">
       <h1>Welcome {fname}!</h1>
       <div className="usersettings">
-        <Link to="!#" className="settings">Add Credit</Link>
+        <Link to="/editbalance" className="settings">Add Credit</Link>
         <Link to="/editgoal" className="settings">Edit Goal</Link>
       </div>
       <Graph />
