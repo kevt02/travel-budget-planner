@@ -48,10 +48,12 @@ app.put('/createaccount/:user', (request, response) => {
     });
 });
 
-app.get('/stays/:city', (request, response) => {
+app.get('/stays/:city/', (request, response) => {
     const city = request.params.city;
-    const sqlQuery = "SELECT PropertyID, Name, Address, Rating, Price, Image FROM Property WHERE UID IS NULL AND City = '" + city + "' GROUP BY PropertyID;";
-    dbConnection.query(sqlQuery, (err, result) => {
+    const UID = request.query.UID; // Retrieve UID from query parameter
+    const sqlQuery = "SELECT PropertyID, Name, Address, Rating, Price, Image FROM Property WHERE UID IS NULL AND City = ? AND NOT EXISTS (SELECT 1 FROM Property AS p2 WHERE p2.PropertyID = Property.PropertyID AND p2.UID = ?) GROUP BY PropertyID;";
+    const values = [city, UID];
+    dbConnection.query(sqlQuery, values, (err, result) => {
         if (err) {
             return response.status(400).json({ Error: "Error in the SQL statement. Please check." });
         }
@@ -59,6 +61,8 @@ app.get('/stays/:city', (request, response) => {
         return response.status(200).json(result);
     });
 });
+
+
 
 app.put('/stays/:city', (request, response) => {
     const sqlQuery = "UPDATE Property AS t1 SET t1.UID = ? "
@@ -73,6 +77,20 @@ app.put('/stays/:city', (request, response) => {
         return response.status(200).json({ Success: "Successful: Record was updated!." });
     });
 });
+app.get('/stays/:city/current', (request, response) => {
+    const city = request.params.city;
+    const UID = request.query.UID;
+    const sqlQuery = "SELECT * FROM Property WHERE City = ? AND UID = ?";
+    const values = [city, UID];
+    dbConnection.query(sqlQuery, values, (err, result) => {
+        if (err) {
+            return response.status(400).json({ Error: "Error in the SQL statement. Please check." });
+        }
+        response.setHeader('SQLQuery', sqlQuery); // send a custom header attribute
+        return response.status(200).json(result);
+    });
+});
+
 app.put('/stays/:city/reset', (request, response) => {
     const sqlQuery = "UPDATE Property SET UID = NULL WHERE UID = ?";
     const values = [request.body.UID];
