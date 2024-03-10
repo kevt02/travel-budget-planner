@@ -11,8 +11,9 @@ var app = express(express.json);
 app.use(cors());
 app.use(bodyParser.json());
 
-app.get('/', (request, response) => {
-    const sqlQuery = "SELECT * FROM User;";
+app.get('/email/:userEmail', (request, response) => {
+    const userEmail = request.params.userEmail;
+    const sqlQuery = "SELECT UID FROM User Where Email = '" + userEmail+ "'";
     dbConnection.query(sqlQuery, (err, result) => {
         if (err) {
             return response.status(400).json({ Error: "Error in the SQL statement. Please check." });
@@ -36,17 +37,18 @@ app.post('/createaccount', (request, response) => {
 
 app.put('/createaccount/:user', (request, response) => {
     const user = request.params.user;
-    const sqlQuery = `UPDATE user SET FName = ?, LName = ?,
-    PaymentInfo = ? WHERE UID = ?;`;
-    const values = [request.body.FName, request.body.LName, request.body.PaymentInfo, user ];
-    console.log(sqlQuery); // for debugging purposes:
-    dbConnection.query(sqlQuery, [...values, user], (err, result) => {
+    const sqlQuery = `UPDATE User SET FName = ?, LName = ?, PaymentInfo = ? WHERE UID = ?;`;
+    const values = [request.body.FName, request.body.LName, request.body.PaymentInfo, user];
+    console.log(sqlQuery); // for debugging purposes
+    dbConnection.query(sqlQuery, values, (err, result) => {
         if (err) {
-            return response.status(400).json({ Error: "Failed: Record was not added." });
+            console.error("Error updating user account:", err);
+            return response.status(400).json({ Error: "Failed: Record was not updated." });
         }
-        return response.status(200).json({ Success: "Successful: Record was updated!." });
+        return response.status(200).json({ Success: "Successful: Record was updated!" });
     });
 });
+
 
 app.get('/stays/:city/', (request, response) => {
     const city = request.params.city;

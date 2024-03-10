@@ -9,7 +9,13 @@
     margin-bottom: 20px;
     margin-top: 2%;
 }
-
+.Message{
+    margin-top: 5%;
+    text-align: center;
+}
+.stays{
+    margin-left: 15%;
+}
 .stay-image img {
     width: 150px;
     height: 150px;

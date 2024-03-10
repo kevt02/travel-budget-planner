@@ -23,17 +23,27 @@ const CreateAccount = () => {
         try {
             const response = await axios.post("http://localhost:2000/createaccount", credentials);
             console.log(response.data);
+            
             // Extract UID from credentials and navigate to the URL with UID
-            const { Email: Email } = credentials;
-            navigate(`/createaccount/${Email}`);
+            const { Email } = credentials;
+            const UIDResponse = await axios.get(`http://localhost:2000/email/${Email}`);
+        
+            const temp = UIDResponse.data;
+            console.log(temp[0]); // Logging to check the structure of the response data
+            const { UID } = temp[0]; // Extracting UID from the response data
+    
+            navigate(`/createaccount/${UID}`);
         } catch (err) {
             if (err.response && err.response.status === 400 && err.response.data && err.response.data.Error) {
-                setErrorMessage("Email already exist. Please try different email.");
+                setErrorMessage("Email already exists. Please try a different email.");
             } else {
                 console.log("Error: " + err);
             }
         }
     };
+    
+
+
 
     return (
         <div className="container">

@@ -12,18 +12,6 @@ const CreateAccountDetail = () => {
         PaymentInfo: ""
     });
     
-    // const navigate = useNavigate();
-
-
-    useEffect(() => {
-        axios.get("http://localhost:2000/createaccount/" + user)
-            .then((res) => {
-                console.log("response: ",res);
-                setuserInfo(res.data[0]);
-            })
-            .catch((err) => console.log("Error: ", err));
-    }, [user]);
-
 
     const handleChange = (e) => {
         setuserInfo((prev) => ({ ...prev, [e.target.name]: e.target.value }));
