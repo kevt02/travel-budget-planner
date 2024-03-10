@@ -32,5 +32,11 @@ export const SidebarData = [
     path: "/stays",
     icon: <FaIcons.FaHotel />,
     cName: "nav-text",
+  },
+  {
+    title: "Currency Rate",
+    path: "/currency",
+    icon: <FaIcons.FaMoneyBill />,
+    cName: "nav-text",
   }
 ];

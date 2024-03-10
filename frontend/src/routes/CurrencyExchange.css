@@ -1,0 +1,44 @@
+.currency-exchange-container {
+  display: flex;
+  justify-content: flex-start; /* Change this line */
+  margin-left: 2%;
+}
+
+h1 {
+  margin-top: 1%;
+  margin-left: 2%;
+  margin-bottom: 2%;
+}
+.base,
+.target {
+  flex-direction: column;
+}
+
+.base label,
+.target label {
+  margin-bottom: 5px;
+}
+
+.base select,
+.target select,
+.base input,
+.target input {
+  margin-bottom: 10px;
+}
+
+.base {
+  width: 20%;
+  margin-right: 10px;
+  
+}
+
+.target {
+  width: 20%;
+  margin-left: 5%;
+}
+
+.form-label.mt-4 {
+  font-size: 20px;
+  font-weight: 500;
+}
+
