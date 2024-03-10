@@ -37,7 +37,7 @@ function App() {
                     <Route path="/currency" element={<CurrencyExchange />} />
                     <Route path="/stays" element={<Stays />} /> 
                     <Route path="/createaccount" element={<CreateAccount />} />
-                    <Route path="/createaccount/:user" element={<CreateAccountDetail />} />
+                    <Route path="/createaccountdetail" element={<CreateAccountDetail />} />
                     <Route path="/login" element={<LogIn />} />
                     <Route path="/editgoal" element={<EditGoal />} />
                     <Route path="/editbalance" element={<EditBalance />} />

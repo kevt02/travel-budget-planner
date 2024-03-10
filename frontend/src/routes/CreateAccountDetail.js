@@ -1,29 +1,30 @@
-// import './CreateAccountDetail.css'
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useParams } from "react-router-dom";
+import { useAuth } from '../components/AuthContext';
 
 const CreateAccountDetail = () => {
+    const { uid, login, logout } = useAuth();
 
-    const { user } = useParams();
+
 
     const [userInfo, setuserInfo] = useState({
         FName: "",
         LName: "",
         PaymentInfo: ""
     });
-    
+
     // const navigate = useNavigate();
 
 
     useEffect(() => {
-        axios.get("http://localhost:2000/createaccount/" + user)
+        axios.get("http://localhost:2000/createaccount/" + uid)
             .then((res) => {
-                console.log("response: ",res);
+                console.log("response: ", res);
                 setuserInfo(res.data[0]);
             })
             .catch((err) => console.log("Error: ", err));
-    }, [user]);
+    }, [uid]);
 
 
     const handleChange = (e) => {
@@ -33,11 +34,11 @@ const CreateAccountDetail = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await axios.put(decodeURI("http://localhost:2000/createaccount/"+ user), userInfo)
-            console.log(response.data.user)
-          } catch (err) {
+            const response = await axios.put(decodeURI("http://localhost:2000/createaccount/" + uid), userInfo)
+            console.log(response.data.uid)
+        } catch (err) {
             console.log("Error: " + err);
-          }
+        }
     };
 
     return (

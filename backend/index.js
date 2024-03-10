@@ -35,6 +35,7 @@ app.get('/', (request, response) => {
 });
 
 app.post('/createaccount', (request, response) => {
+   // console.log(request.body.email);
     const sqlQuery = 'INSERT INTO User (Email, Password) VALUES (?, ?);';
     const values = [request.body.Email, request.body.Password];
     dbConnection.query(sqlQuery, values, (err, result) => {
@@ -58,6 +59,18 @@ app.put('/createaccount/:user', (request, response) => {
             return response.status(400).json({ Error: "Failed: Record was not added." });
         }
         return response.status(200).json({ Success: "Successful: Record was updated!." });
+    });
+});
+
+app.get('/email/:userEmail', (request, response) => {
+    const userEmail = request.params.userEmail;
+    const sqlQuery = "SELECT UID FROM User Where Email = '" + userEmail + "'";
+    dbConnection.query(sqlQuery, (err, result) => {
+        if (err) {
+            return response.status(400).json({ Error: "Error in the SQL statement. Please check." });
+        }
+        response.setHeader('SQLQuery', sqlQuery); // send a custom header attribute
+        return response.status(200).json(result);
     });
 });
 
