@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { useParams } from "react-router-dom";
 import { useAuth } from '../components/AuthContext';
+import { useNavigate, Link } from 'react-router-dom';
 
 const CreateAccountDetail = () => {
-    const { uid, login, logout } = useAuth();
-
+    const { isLoggedIn, uid } = useAuth();
+    const navigate = useNavigate();
 
 
     const [userInfo, setuserInfo] = useState({
@@ -17,14 +17,14 @@ const CreateAccountDetail = () => {
     // const navigate = useNavigate();
 
 
-    useEffect(() => {
+    /*useEffect(() => {
         axios.get("http://localhost:2000/createaccount/" + uid)
             .then((res) => {
                 console.log("response: ", res);
                 setuserInfo(res.data[0]);
             })
             .catch((err) => console.log("Error: ", err));
-    }, [uid]);
+    }, [uid]);*/
 
 
     const handleChange = (e) => {
@@ -35,7 +35,7 @@ const CreateAccountDetail = () => {
         e.preventDefault();
         try {
             const response = await axios.put(decodeURI("http://localhost:2000/createaccount/" + uid), userInfo)
-            console.log(response.data.uid)
+            navigate("/savings");
         } catch (err) {
             console.log("Error: " + err);
         }

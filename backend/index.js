@@ -50,7 +50,7 @@ app.post('/createaccount', (request, response) => {
 
 app.put('/createaccount/:user', (request, response) => {
     const user = request.params.user;
-    const sqlQuery = `UPDATE user SET FName = ?, LName = ?,
+    const sqlQuery = `UPDATE User SET FName = ?, LName = ?,
     PaymentInfo = ? WHERE UID = ?;`;
     const values = [request.body.FName, request.body.LName, request.body.PaymentInfo, user];
     console.log(sqlQuery); // for debugging purposes:
