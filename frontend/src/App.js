@@ -15,6 +15,7 @@ import CreateAccount from './routes/CreateAccount';
 import CreateAccountDetail from './routes/CreateAccountDetail';
 import { AuthProvider } from './components/AuthContext';
 import EditGoal from './routes/EditGoal';
+import EditBalance from './routes/EditBalance';
 
 
 
@@ -36,6 +37,7 @@ function App() {
                         <Route path="/createaccount/:user" element={<CreateAccountDetail />} />
                         <Route path="/login" element={<LogIn />} />
                         <Route path="/editgoal" element={<EditGoal />} />
+                        <Route path="/editbalance" element={<EditBalance />} />
                     </Routes>
                 </BrowserRouter>
             </AuthProvider>

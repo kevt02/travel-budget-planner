@@ -94,11 +94,36 @@ app.put('/:id/goals', (request, response) => {
   const values = [request.body.Budget, request.body.StartCity, request.body.EndCity, request.body.DepartDate, request.body.MaxDuration];
   dbConnection.query(sqlQuery, [...values, UID], (err, result) => {
     if (err) {
-      return response.status(400).json({ Error: "Failed: Record was not added." });
+      return response.status(400).json({ Error: "Failed: Record was not updated." });
     }
     return response.status(200).json({ Success: "Successful: Record was updated!.", result });
   });
 });
+
+app.get('/:id/balance', (request, response) => {
+  const id = request.params.id;
+  const sqlQuery = `SELECT AccountBalance FROM User WHERE uid = ${id}`;
+  dbConnection.query(sqlQuery, (err, result) => {
+    if (err) {
+      return response.status(400).json({ Error: "Failed: User info not found." });
+    }
+    return response.status(200).json(result);
+  })
+});
+
+app.put('/:id/balance', (request, response) => {
+  const UID = request.params.id;
+  const sqlQuery = `UPDATE User SET AccountBalance = ? WHERE UID = ?;`;
+  const values = [request.body.AccountBalance];
+  dbConnection.query(sqlQuery, [...values, UID], (err, result) => {
+    if (err) {
+      return response.status(400).json({ Error: "Failed: Record was not updated." });
+    }
+    return response.status(200).json({ Success: "Successful: Record was updated!.", result });
+  });
+});
+
+
 
 app.get('/:id/preferences', (request, response) => {
   const id = request.params.id;
