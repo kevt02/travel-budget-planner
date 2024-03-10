@@ -61,6 +61,30 @@ app.get('/preferences/:id', (request, response) => {
   })
 })
 
+app.post('/skyscanner',async (request, response) => {
+  console.log(request.body)
+  const url = "https://partners.api.skyscanner.net/apiservices/v3/autosuggest/flights"
+  const options = {
+    method: 'POST',
+    headers: {
+      'Accept':'application/json, text/plain, *.*',
+      'Content-Type':"text/json",
+        'x-api-key': 'sh428739766321522266746152871799',
+        "Access-Control-Allow-Origin":"*"
+
+    },
+    body:JSON.stringify(request.body)}
+  
+  try {
+    const r = await fetch(url, options);
+    const data = await r.json();
+    console.log(data);
+    response.json(data)
+} catch (error) {
+    console.error('Error:', error);
+    response.status(400).json({error:error.toString()})
+}
+})
 app.listen(2000, () => {
   console.log("Express server is running and listening");
 });

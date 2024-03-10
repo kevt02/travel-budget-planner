@@ -32,5 +32,11 @@ export const SidebarData = [
     path: "/stays",
     icon: <FaIcons.FaHotel />,
     cName: "nav-text",
+  },
+  {
+  title: "Preferences",
+  path: "/preferences",
+  icon: <FaIcons.FaHotel />,
+  cName: "nav-text",
   }
 ];

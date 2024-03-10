@@ -1,0 +1,67 @@
+
+// ----------------------------------------------
+// TCSS 460: Winter 2024
+// MySQL Coonfiguration: Backend
+// ----------------------------------------------
+// Code is based on the 
+// Node.js for MySQL Library:
+// https://github.com/mysqljs/mysql
+// ----------------------------------------------
+
+// ----------------------------------------------
+// (A) Import the MySQL module or library
+// ----------------------------------------------
+const mysql = require("mysql");
+
+// ----------------------------------------------
+// (B) Configure the connection options for MySQL
+//     The database name is: 'washingtondb'
+//     This is the database that we have created 
+//     in Part I.B using phpMyAdmin via XAMPP. 
+// ----------------------------------------------
+// ###### username and password must match ######
+// ----------------------------------------------
+// Ensure username and password match thoe ones
+// identified using phpMyAdmin when creating 
+// the testuser account. We are using  default 
+// tport hat is created by XAMPP for MySQL: 3306.
+// ----------------------------------------------
+/*const mysqlConfig = {
+    host: "localhost", 
+    port: 3306,
+    user: "groupuser", 
+    password: "1234",
+    database: "projecttable_db",
+    debug: false // Connection debugging mode is ON
+};*/
+
+const mysqlConfig = {
+    host: "tcss-460.c9iukaocqmmd.us-east-1.rds.amazonaws.com",
+    port: 3306,
+    user: "admin",
+    password: "password123",
+    database: "penny_pilot",
+    multipleStatements: true,
+    debug: false // Connection debugging mode is OFF
+};
+
+// ----------------------------------------------
+// (C) Establishing connection using the options
+//     defined in mySQLConfig (without a query)
+// ----------------------------------------------
+const dbConnection = mysql.createConnection(mysqlConfig);
+dbConnection.connect(function (err) {
+    // unsucessful: handle any errors that might occur during connection
+    if (err) {
+        console.error('Opps. There was an error connecting to the database: ', err.stack);
+        return;
+    }
+    // successful: output on the screen a message that connection was successful
+    console.log('Backend is now connected to: ' + dbConnection.config.database + '.');
+});
+
+// ----------------------------------------------
+// (D) This module exports dbConnection to be 
+//     used other files (e..g, index.js)
+// ----------------------------------------------
+module.exports = dbConnection;

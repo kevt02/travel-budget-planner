@@ -1,6 +1,5 @@
 
 import React from 'react'
-import Header from './components/Header'
 
 import "./App.css";
 import Sidebar from './components/Sidebar';
@@ -12,6 +11,7 @@ import Trains from './routes/Trains';
 import Stays from './routes/Stays';
 import CreateAccount from './routes/CreateAccount';
 import CreateAccountDetail from './routes/CreateAccountDetail';
+import Preferences from './routes/Preferences';
 
 function App() {
     return (
@@ -27,6 +27,7 @@ function App() {
                     <Route path="/stays" element={<Stays />} />
                     <Route path="/createaccount" element={<CreateAccount />} />
                     <Route path="/createaccountdetail" element={<CreateAccountDetail />} />
+                    <Route path="/preferences" element={<Preferences/>}/>
                 </Routes>
             </BrowserRouter>
 
