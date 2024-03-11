@@ -5,6 +5,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 import { useAuth } from '../components/AuthContext';
 import GoalProgress from '../components/GoalProgress';
+import DisplayFlights from '../components/DisplayFlights';
 
 function Savings() {
   const [fname, setFname] = useState('');
@@ -39,7 +40,7 @@ function Savings() {
           <Link to="/editgoal" className="settings">Edit Goal</Link>
         </div>
       </div>
-      <div className="quadrant">put flight info here</div>
+      <div className="quadrant"><DisplayFlights /></div>
       <Graph />
     </div>
   );

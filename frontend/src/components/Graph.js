@@ -2,7 +2,6 @@ import React, { useEffect, useState, useRef } from 'react';
 import Chart from 'chart.js/auto';
 import axios from 'axios';
 import { useAuth } from './AuthContext';
-
 function Graph() {
     const [dataPoints, setDataPoints] = useState([]);
     const [startCity, setStartCity] = useState('');
@@ -133,6 +132,11 @@ function Graph() {
 
     return (
         <div className="graph">
+            {graphRendered ? null : (
+                <button className="price-button" onClick={fetchUserData}>
+                    Check Prices
+                </button>
+            )}
             {graphRendered ? null : (
                 <button className="price-button" onClick={fetchUserData}>
                     Check Prices

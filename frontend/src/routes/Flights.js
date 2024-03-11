@@ -1,139 +1,169 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { useAuth } from '../components/AuthContext';
 import { useNavigate, Link } from 'react-router-dom';
 
 function Flights() {
-  const [travels, setTravels] = useState([]);
-  const [travelType, setTravelType] = useState('Plane');
-  const [startCity, setStartCity] = useState('');
-  const [endCity, setEndCity] = useState('');
-  const [startDate, setStartDate] = useState('');
-  const [endDate, setEndDate] = useState('');
+  const { isLoggedIn, uid } = useAuth();
+  const [flights, setFlights] = useState([]);
+  const [departAirportCode, setDepartAirportCode] = useState('');
+  const [destAirportCode, setDestAirportCode] = useState('');
+  const [date, setDate] = useState('');
   const [error, setError] = useState('');
   const [searchPerformed, setSearchPerformed] = useState(false);
   const navigate = useNavigate();
 
-  const fetchTravelData = async () => {
-    if (!startCity || !endCity || !startDate || !endDate) {
-      setError('Please fill out all fields to search for your preferred travel type.');
+  const fetchFlightData = async () => {
+    setError(''); 
+    if (!departAirportCode || !destAirportCode || !date) {
+      setError('Please fill out all fields to search for flights!');
       setSearchPerformed(false);
       return;
     }
 
     try {
-      const response = await axios.get(`http://localhost:2000/auth/travel`, {
-        params: {
-          type: travelType,
-          startDate: startDate,
-          endDate: endDate,
-          startCity: startCity,
-          endCity: endCity,
-        },
+      const response = await axios.get('https://flight-fare-search.p.rapidapi.com/v2/flights/', {
+        params: { from: departAirportCode, to: destAirportCode, date, type: 'economy', currency: 'USD' },
+        headers: {
+          'X-RapidAPI-Key': '17bb424841msh89c59abdc2c6ca2p18caeajsnc82d63b3e68f',
+         // 'X-RapidAPI-Key': '570c04da9dmshbf7dc3f7da9503ep12a0edjsn1b82ee6baf4e',
+          //'X-RapidAPI-Key': '331d9b53f7mshc90d0bdd81195f0p1568a1jsnf78fe26e2c3c',
+          'X-RapidAPI-Host': 'flight-fare-search.p.rapidapi.com'
+        }
       });
-      if (response.data.length > 0) {
-        const sortedData = response.data.sort((a, b) => a.price - b.price);
-        setTravels(sortedData);
-        setError('');
+
+      const results = response.data?.results || [];
+      if (results.length > 0) {
+        const flightsData = results.map(flight => ({
+          FlightName: flight.flight_name,
+          FlightCode: flight.flight_code,
+          DepartureAirportCode: flight.departureAirport.code,
+          DepartureAirportName: flight.departureAirport.label,
+          ArrivalAirportCode: flight.arrivalAirport.code,
+          ArrivalAirportName: flight.arrivalAirport.label,
+          DepartureDate: flight.departureAirport.time.split('T')[0],
+          DepartureTime: flight.departureAirport.time.split('T')[1],
+          ArrivalDate: flight.arrivalAirport.time.split('T')[0],
+          ArrivalTime: flight.arrivalAirport.time.split('T')[1],
+          Price: flight.totals.total.toFixed(2)
+        }));
+        setFlights(flightsData);
       } else {
-        setTravels([]);
         setError('');
+        setFlights([]);
       }
     } catch (error) {
-      console.error('There was an error fetching the travel data:', error);
-      setError('Failed to fetch travel data.');
+      console.error('Error fetching flight data:', error);
+      setError('');
     } finally {
       setSearchPerformed(true);
     }
   };
+  useEffect(() => {
+    if (!isLoggedIn) {
+      navigate('/createaccount');
+    }
+  }, [isLoggedIn, uid, navigate]);
+
+  const saveFlightData = async (flight) => {
+    if (!isLoggedIn) {
+      setError('You must be logged in to apply for flights.');
+      return;
+    }
 
 
-  const handleApply = (travel) => {
-    console.log('Applying for travel:', travel);
-    navigate('/', { state: { selectedTravel: travel } });
-    //navigate('/'); // Navigate back to the homepage 
+    const flightDataWithUID = {
+      userId: uid,
+      flightCode: flight.FlightCode, 
+      departureAirport: flight.DepartureAirportCode, 
+      departureAirportName: flight.DepartureAirportName, 
+      arrivalAirport: flight.ArrivalAirportCode, 
+      arrivalAirportName: flight.ArrivalAirportName, 
+      departureDate: flight.DepartureDate, 
+      departureTime: flight.DepartureTime, 
+      arrivalDate: flight.ArrivalDate, 
+      arrivalTime: flight.ArrivalTime, 
+      price: flight.Price, 
+    };
+
+
+    try {
+      const response = await axios.post('http://localhost:2000/auth/saveFlight', flightDataWithUID);
+      console.log('Flight saved:', response.data);
+      navigate('/'); 
+    } catch (error) {
+     
+      console.error('Error saving flight:', error.response ? error.response.data : error);
+      setError('Unable to save flight. Please try again later.'); 
+    }
   };
+
+
+
 
   return (
     <div className="flights-container">
-      <h1>Search Transportation</h1>
+      <h1>Search Flights</h1>
       {error && <div className="error-message">{error}</div>}
       <div className="search-fields">
         <input
           type="text"
-          value={startCity}
-          onChange={(e) => setStartCity(e.target.value)}
-          placeholder="Start City"
+          value={departAirportCode}
+          onChange={(e) => setDepartAirportCode(e.target.value)}
+          placeholder="Depart Airport Code"
         />
         <input
           type="text"
-          value={endCity}
-          onChange={(e) => setEndCity(e.target.value)}
-          placeholder="End City"
+          value={destAirportCode}
+          onChange={(e) => setDestAirportCode(e.target.value)}
+          placeholder="Destin Airport Code"
         />
         <input
           type="date"
-          value={startDate}
-          onChange={(e) => setStartDate(e.target.value)}
-          placeholder="Start Date"
+          value={date}
+          onChange={(e) => setDate(e.target.value)}
+          placeholder="Departure Date"
         />
-        <input
-          type="date"
-          value={endDate}
-          onChange={(e) => setEndDate(e.target.value)}
-          placeholder="End Date"
-        />
-        <select
-          value={travelType}
-          onChange={(e) => setTravelType(e.target.value)}
-        >
-          <option value="Plane">Plane</option>
-          <option value="Train">Train</option>
-        </select>
-        <button onClick={fetchTravelData}>Search</button>
+        <button onClick={fetchFlightData}>Search</button>
       </div>
+      
       <div className="flight-results">
-        {searchPerformed ? (
-          travels.length > 0 ? (
-            travels.map((travel) => (
-              <div className="flight-card" key={travel.TravelID}>
-               
-                <div className="flight-info">
-                  <div className="flight-info time-info">
-                    <span className="label">Departure Time:</span>
-                    <span>{travel.DepartureTime}</span>
+        {searchPerformed && (
+          flights.length > 0 ? (
+            flights.map((flight, index) => (
+              <div className="flight-card" key={index}>
+                <div className="flight-card" key={index}>
+                  <div className="flight-header">
+                    <span className="flight-name">{flight.FlightName}</span>
+                    <span className="flight-code">{flight.FlightCode}</span>
+                    <span className="flight-price">{`$${flight.Price}`}</span>
                   </div>
-                  <div className="flight-info time-info">
-                    <span className="label">Arrival Time:</span>
-                    <span>{travel.ArrivalTime}</span>
-                  </div>
-                  <div className="flight-info time-info">
-                    <span className="label">Start Date:</span>
-                    <span>{new Date(travel.StartDate).toLocaleDateString()}</span>
-                  </div>
-                  <div className="flight-info time-info">
-                    <span className="label">End Date:</span>
-                    <span>{new Date(travel.EndDate).toLocaleDateString()}</span>
-                  </div>
-                  <div className="flight-info price-highlight">
-                    <span className="label">Price:</span>
-                    <span>${travel.Price}</span>
-                    <button className="apply-button" onClick={() => handleApply(travel)}>
-                      Apply
-                    </button>
+                  <div className="flight-body">
+                    <div className="flight-info">
+                      <span className="label">Departure:</span>
+                      <span>{flight.DepartureAirportName}</span>
+                      <span>{flight.DepartureDate}</span>
+                      <span>{flight.DepartureTime}</span>
+                    </div>
+                    <div className="flight-info">
+                      <span className="label">Arrival:</span>
+                      <span>{flight.ArrivalAirportName}</span>
+                      <span>{flight.ArrivalDate}</span>
+                      <span>{flight.ArrivalTime}</span>
+                    </div>
                   </div>
                 </div>
-
+                <button className="apply-button" onClick={() => saveFlightData(flight)}>
+                  Apply
+                </button>
               </div>
             ))
           ) : (
-            <div className="no-results">
-                No information on this date. Please select another day.
-            </div>
+            <div className="no-results">No flights found. Please adjust your search criteria.</div>
           )
-        ) : null}
+        )}
       </div>
       <Link to="/" className="back-home-link">Back to Home Page</Link>
-
     </div>
   );
 }

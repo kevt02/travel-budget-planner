@@ -7,6 +7,7 @@
   pointer-events: none;
 }
 
+
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {
     animation: App-logo-spin infinite 20s linear;
@@ -62,7 +63,10 @@ body {
   font-weight: bold;
 }
 
-.login, .price-button, .settings, .accept {
+.login,
+.price-button,
+.settings,
+.accept {
   background-color: orange;
   font-size: 15pt;
   border: solid;
@@ -142,7 +146,10 @@ sidebar-items {
   color: #fff;
 }
 
-.login:hover, .price-button:hover, .settings:hover, .accept:hover {
+.login:hover,
+.price-button:hover,
+.settings:hover,
+.accept:hover {
   background-color: white;
 }
 
@@ -165,13 +172,18 @@ sidebar-items {
   text-align: center;
   color: #fff;
   background-color: #d67d0f;
-  /* A noticeable color */
   border-radius: 5px;
   font-weight: bold;
 }
 
 .error-message {
   background-color: #cc0000;
+  color: white;
+  padding: 10px;
+  margin: 10px 0 10px 40px;
+  border-radius: 5px;
+  display: inline-block;
+  font-family:'Times New Roman', Times, serif;
 }
 
 /* Search box styles */
@@ -210,6 +222,8 @@ sidebar-items {
 
 /* Flight results and cards */
 .flight-results {
+  padding: 15px;
+
   display: flex;
   flex-direction: column;
   gap: 30px;
@@ -234,13 +248,57 @@ sidebar-items {
   gap: 10px;
 }
 
-/* General flight-info container */
+
 .flight-info {
   display: grid;
   grid-template-columns: minmax(auto, max-content) 1fr;
   gap: 0 30px;
 }
 
+.flight-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 15px;
+  border-bottom: 2px solid #eee;
+  margin-bottom: 15px;
+}
+
+.flight-header .flight-name {
+  font-weight: bold;
+  color: #333;
+  font-size: 18px;
+  margin-right: 10px;
+}
+
+.flight-code {
+  font-weight: bold;
+  color: #333;
+  font-size: 18px;
+}
+
+.flight-price {
+  font-weight: bold;
+  color: #d67d0f;
+  font-size: 22px;
+}
+
+.flight-body .flight-info {
+  display: grid;
+  grid-template-columns: minmax(auto, max-content) 1fr;
+  gap: 0 15px;
+  padding-bottom: 5px;
+}
+
+.flight-info span {
+  padding: 2px 0;
+}
+
+.apply-button {
+  align-self: flex-end;
+  margin-top: auto;
+  padding: 10px 20px;
+}
 
 .time-info,
 .price-highlight {

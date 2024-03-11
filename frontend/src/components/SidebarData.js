@@ -3,12 +3,7 @@ import * as FaIcons from "react-icons/fa";
 import * as AiIcons from "react-icons/ai";
 
 export const SidebarData = [
-  {
-    title: "Home",
-    path: "/",
-    icon: <AiIcons.AiFillHome />,
-    cName: "nav-text",
-  },
+  
   {
     title: "Savings",
     path: "/savings",
@@ -27,5 +22,25 @@ export const SidebarData = [
     path: "/stays",
     icon: <FaIcons.FaHotel />,
     cName: "nav-text",
+  },
+  {
+    title: "Currency Rate",
+    path: "/currency",
+    icon: <FaIcons.FaMoneyBill />,
+    cName: "nav-text",
+  },
+
+   {
+    title: "Preferences",
+    path: "/preferences",
+    icon: <FaIcons.FaHotel />,
+    cName: "nav-text",
+  },
+  {
+    title: "About Us",
+    path: "/",
+    icon: <AiIcons.AiFillHome />,
+    cName: "nav-text",
   }
+
 ];
