@@ -28,7 +28,7 @@ function SetGoal() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await axios.post((`http://localhost:2000/${uid}/goals`), goals);
+            const response = await axios.post((`http://localhost:2000/savings/${uid}/goals`), goals);
             console.log(response);
             console.log("submitted goals", goals);
             navigate(`/savings`);

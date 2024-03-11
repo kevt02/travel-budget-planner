@@ -17,12 +17,11 @@ function EditBalance() {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await axios.get(`http://localhost:2000/${uid}/balance`);
+                const response = await axios.get(`http://localhost:2000/savings/${uid}/balance`);
                 console.log("get data:", response.data[0]);
                 setBalance(response.data[0].AccountBalance);
                 setPaymentInfo(response.data[0].PaymentInfo);
 
-                // Update lastDigits when paymentInfo is fetched
                 if (response.data[0].PaymentInfo) {
                     const newLastDigits = response.data[0].PaymentInfo.slice(-4);
                     setLastDigits(newLastDigits);
@@ -33,7 +32,7 @@ function EditBalance() {
             }
         };
 
-        fetchData(); // Call the fetchData function initially
+        fetchData(); 
     }, [uid, setBalance, setPaymentInfo, setLastDigits]);
 
     const handleChange = (e) => {
@@ -42,22 +41,14 @@ function EditBalance() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-
-        // Display confirmation dialog
         const isConfirmed = window.confirm("Are you sure you want to charge this payment method?");
 
         if (isConfirmed) {
             try {
-            
-                // Calculate the new balance by adding the user input to the original balance
                 const newBalance = parseFloat(balance) + parseFloat(userInput);
+                const response = await axios.put(`http://localhost:2000/savings/${uid}/balance`, { AccountBalance: newBalance });
 
-                // Use the calculated new balance for the PUT request
-                const response = await axios.put(`http://localhost:2000/${uid}/balance`, { AccountBalance: newBalance });
-
-                console.log(response.data);
-
-                // Reload the page after successful update
+                console.log(response);
                 navigate('/savings');
             } catch (error) {
                 console.error("Error changing balance", error);
@@ -67,8 +58,6 @@ function EditBalance() {
 
     const handleUpdatePayment = async (e) => {
         e.preventDefault();
-
-        // Validation: Check if the new payment info matches the pattern of four groups of four digits
         const paymentInfoPattern = /^\d{4}-\d{4}-\d{4}-\d{4}$/;
         if (!paymentInfoPattern.test(newPaymentInfo)) {
             alert("Please enter a valid payment info in the format xxxx-xxxx-xxxx-xxxx");
@@ -76,10 +65,9 @@ function EditBalance() {
         }
 
         try {
-            const response = await axios.put(`http://localhost:2000/${uid}/updatepayment`, { PaymentInfo: newPaymentInfo });
+            const response = await axios.put(`http://localhost:2000/savings/${uid}/updatepayment`, { PaymentInfo: newPaymentInfo });
             console.log(response);
 
-            // Reload the page after successful update
             window.location.reload();
         } catch (error) {
             console.error("Error changing payment info", error);

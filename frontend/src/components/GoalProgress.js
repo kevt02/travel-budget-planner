@@ -3,40 +3,63 @@ import { useAuth } from '../components/AuthContext';
 import axios from 'axios';
 
 function GoalProgress() {
-    const [currentBalance, setCurrentBalance] = useState(0);
-    const [goalBalance, setGoalBalance] = useState(0);
-    const [percentage, setPercentage] = useState(0);
-    const { uid } = useAuth();
+  const [currentBalance, setCurrentBalance] = useState(0);
+  const [goalBalance, setGoalBalance] = useState(0);
+  const [percentage, setPercentage] = useState(0);
+  const [showProgressBar, setShowProgressBar] = useState(true); 
+  const { uid } = useAuth();
 
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const balanceResponse = await axios.get(`http://localhost:2000/${uid}/balance`);
-                setCurrentBalance(balanceResponse.data[0].AccountBalance);
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const balanceResponse = await axios.get(`http://localhost:2000/savings/${uid}/balance`);
+        // Check if there is no AccountBalance object
+        if (!balanceResponse.data[0].AccountBalance) {
+          setCurrentBalance(0);
+        } else {
+          setCurrentBalance(balanceResponse.data[0].AccountBalance);
+        }
+        const budgetResponse = await axios.get(`http://localhost:2000/savings/${uid}/goals`);
 
-                const totalResponse = await axios.get(`http://localhost:2000/${uid}/totalprice`);
-                const total = totalResponse.data[0].HotelPrice + totalResponse.data[0].FlightPrice;
-                setGoalBalance(total);
-            } catch (error) {
-                console.error("Error getting balance", error);
-            }
-        };
+        // Set goalBalance and update showProgressBar based on its value
+        const budget = budgetResponse.data[0].Budget;
+        setGoalBalance(budget);
+        setShowProgressBar(budget > 0);
 
-        fetchData();
-    }, [uid]);
+      } catch (error) {
+        console.error("Error getting balance", error);
+      }
+    };
 
-    useEffect(() => {
-        setPercentage((prevPercentage) => (currentBalance / goalBalance) * 100);
-    }, [currentBalance, goalBalance]);
+    fetchData();
+  }, [uid]);
 
-    return (
-        <div className="goal-progress">
-            <div className="progress-bar">
-                <div className="progress-bar-fill" style={{ width: `${percentage}%` }}></div>
-                <label className="progress-label">{currentBalance} out of {goalBalance}</label>
-            </div>
+  useEffect(() => {
+    // Calculate percentage only if the progress bar is supposed to be shown
+    if (showProgressBar) {
+      const calculatedPercentage = (currentBalance / goalBalance) * 100;
+
+      // Ensure the percentage does not exceed 100
+      const clampedPercentage = Math.min(calculatedPercentage, 100);
+
+      setPercentage(clampedPercentage);
+    }
+  }, [currentBalance, goalBalance, showProgressBar]);
+
+  return (
+    <div className="goal-progress">
+      {showProgressBar && (
+        <div className="goal-progress-bar">
+          <div className="goal-progress-bar-fill" style={{ width: `${percentage}%` }}></div>
+          <label className="progress-title">
+            {currentBalance} out of {goalBalance} Reached!
+            {percentage >= 100 && " - Goal Completed"}
+          </label>
         </div>
-    );
+      )}
+      {!showProgressBar && <p>No Current Goal</p>}
+    </div>
+  );
 }
 
 export default GoalProgress;

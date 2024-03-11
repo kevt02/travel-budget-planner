@@ -14,15 +14,15 @@ function Header() {
     navigate(`/createaccount`);
   };
 
-
+ 
 
   return (
     <nav className="header">
-      <Link to="/" className="title">
-        <GiPiggyBank />
-        Penny Pilot
-      </Link>
-      {isLoggedIn ? (
+        <Link to="/" className="title">
+            <GiPiggyBank />
+            Penny Pilot
+        </Link>
+        {isLoggedIn ? (
         // If logged in, show the logout button
         <button onClick={handleLogout} className="login">
           <FaUser />
