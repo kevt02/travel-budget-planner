@@ -1,6 +1,6 @@
-/* div {
-    margin-top: 20px; 
-    margin-bottom: 20px; 
+div {
+    margin-top: 20px; /* Adjust the value as needed */
+    margin-bottom: 20px; /* Adjust the value as needed */
 }
 
 .container {
@@ -13,6 +13,7 @@
 }
 
 .form-control {
-    width: 100%;
+    width: 100%; /* Adjust the width as needed */
+    /* Add any additional styling you need */
 }
- */
+

@@ -9,13 +9,7 @@
     margin-bottom: 20px;
     margin-top: 2%;
 }
-.Message{
-    margin-top: 5%;
-    text-align: center;
-}
-.stays{
-    margin-left: 15%;
-}
+
 .stay-image img {
     width: 150px;
     height: 150px;
@@ -40,11 +34,14 @@
 
 .stay-details .apply-button {
     align-self: flex-end;
-    width: fit-content; /* Ensure button width fits its content */
+    width: fit-content;
+    /* Ensure button width fits its content */
 }
-.button{
+
+.button {
     text-align: right;
 }
+
 .btn.btn-primary {
     width: 30%;
 }

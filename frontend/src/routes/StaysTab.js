@@ -1,23 +1,29 @@
 import './Stays.css'
 import axios from "axios";
 import { useParams } from "react-router-dom";
+import { useAuth } from '../components/AuthContext';
+import { useNavigate, Link } from 'react-router-dom';
 
 function StayTab({ hotel }) {
-    const { user } = useParams(); // Get UID from URL params
+    const { isLoggedIn, uid, login, logout } = useAuth();
+    const navigate = useNavigate();
+
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
             await axios.put("http://localhost:2000/stays/'" + hotel.City + "'/reset", {
-                UID: user
+                UID: uid
             });
             const response = await axios.put("http://localhost:2000/stays/" + hotel.City, {
-                UID: user,
+                UID: uid,
                 PropID: hotel.PropertyID
             });
-           
+
             console.log(response);
             window.alert("You have successfully updated.");
+            //navigate('/stays');
+            
             window.location.reload(); // Refresh the page
         } catch (err) {
             console.log("Error: " + err);
@@ -32,13 +38,17 @@ function StayTab({ hotel }) {
             <div className="stay-details">
                 <h3 className="stay-name">{hotel.Name}</h3>
                 <p className="stay-price">Price: ${hotel.Price}</p>
-                <p className="stay-rating">Rating: {hotel.Rating != null ? `${hotel.Rating}/10` : "---"}</p>
+                <p className="stay-rating">Rating: {hotel.Rating != null ? `${hotel.Rating}` : "---"}</p>
                 <p className="stay-location">Location: {hotel.Address}</p>
                 <div className="button">
                     <button className="btn btn-primary" onClick={handleSubmit}>Apply</button>
                 </div>
             </div>
+        
         </div>
+
+   
+        
     );
 }
 
