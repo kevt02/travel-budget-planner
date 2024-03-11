@@ -113,7 +113,10 @@ app.get('/:id/balance', (request, response) => {
 
 app.get('/:id/totalprice', (request, response) => {
   const id = request.params.id;
-  const sqlQuery = `SELECT Property.price AS 'HotelPrice' , TransportationTickets.price AS 'FlightPrice' FROM Property, TransportationTickets WHERE Property.UID = ${id};`;
+  const sqlQuery = `SELECT Property.price AS 'HotelPrice', TransportationTickets.price AS 'FlightPrice'
+  FROM Property
+  LEFT JOIN TransportationTickets ON Property.UID = TransportationTickets.UID
+  WHERE Property.UID = ${id};`;
   dbConnection.query(sqlQuery, (err, result) => {
     if (err) {
       return response.status(400).json({ Error: "Failed: Price info not found." });

@@ -12,7 +12,7 @@ function Graph() {
     const [endCityID, setEndCityID] = useState('');
     const [graphRendered, setGraphRendered] = useState(false);
 
-    const { isLoggedIn, uid, login, logout } = useAuth();
+    const { uid } = useAuth();
 
     const chartRef = useRef(null);
 
@@ -23,16 +23,13 @@ function Graph() {
     
             setStartCity(responseData[0].StartCity);
             setEndCity(responseData[0].EndCity);
-            console.log(startCity, endCity);
     
             // Convert the date to yyyy-mm-dd format
             const rawDate = new Date(responseData[0].DepartDate);
             const formattedDate = rawDate.toISOString().split('T')[0];
             setDate(formattedDate);
-            console.log(formattedDate);
     
             // Call fetchID for both startCity and endCity
-            console.log(startCity, endCity);
             fetchID(startCity, setStartCityID);
             fetchID(endCity, setEndCityID);
             console.log("FetchUserData Called");
@@ -56,7 +53,6 @@ function Graph() {
         try {
             const response = await axios.request(options);
             const cityID = response.data.data[0]?.presentation?.id;
-            console.log(`City: ${city}, ID: ${cityID}`);
             setCityID(cityID);
             console.log("FetchID Called");
         } catch (error) {
@@ -82,11 +78,10 @@ function Graph() {
         try {
             const response = await axios.request(options);
 
-            // Extract relevant data from the API response
             const flightData = response.data.data.flights;
             const days = flightData.days || [];
 
-            // Update the state with the new dataPoints
+            // Change original date from json to months and set graph
             const newDataPoints = days.map(day => ({
                 label: new Date(day.day).toLocaleString('default', { month: 'short' }),
                 value: day.price
@@ -109,14 +104,6 @@ function Graph() {
             fetchFlights(startCityID, endCityID, date);
         }
     }, [startCityID, endCityID]);
-
-    const chartOptions = {
-        scales: {
-            y: {
-                beginAtZero: true,
-            },
-        },
-    };
 
     useEffect(() => {
         if (chartRef.current) {

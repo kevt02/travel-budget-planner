@@ -4,7 +4,7 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 function EditGoal() {
 
-    const { isLoggedIn, uid, login, logout } = useAuth();
+    const { uid } = useAuth();
 
     const navigate = useNavigate();
 

@@ -14,7 +14,7 @@ const CreateAccount = () => {
 
     const handleChange = (e) => {
         setCredentials((prev) => ({ ...prev, [e.target.name]: e.target.value }));
-        setErrorMessage(""); // Clear any previous error message
+        setErrorMessage(""); 
     };
 
     const handleSubmit = async (e) => {
