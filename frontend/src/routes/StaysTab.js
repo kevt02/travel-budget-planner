@@ -23,7 +23,7 @@ function StayTab({ hotel }) {
             console.log(response);
             window.alert("You have successfully updated.");
             //navigate('/stays');
-            
+
             window.location.reload(); // Refresh the page
         } catch (err) {
             console.log("Error: " + err);
@@ -37,7 +37,6 @@ function StayTab({ hotel }) {
             </div>
             <div className="stay-details">
                 <h3 className="stay-name">{hotel.Name}</h3>
-                <p>{hotel.PropertyID}</p>
                 <p className="stay-price">Price: ${hotel.Price}</p>
                 <p className="stay-rating">Rating: {hotel.Rating != null ? `${hotel.Rating}` : "---"}</p>
                 <p className="stay-location">Location: {hotel.Address}</p>
@@ -45,11 +44,11 @@ function StayTab({ hotel }) {
                     <button className="btn btn-primary" onClick={handleSubmit}>Apply</button>
                 </div>
             </div>
-        
+
         </div>
 
-   
-        
+
+
     );
 }
 

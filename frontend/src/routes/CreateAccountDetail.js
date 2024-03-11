@@ -35,7 +35,7 @@ const CreateAccountDetail = () => {
         e.preventDefault();
         try {
             const response = await axios.put(decodeURI("http://localhost:2000/createaccount/" + uid), userInfo)
-            navigate("/savings");
+            navigate("/setgoal");
         } catch (err) {
             console.log("Error: " + err);
         }
@@ -70,14 +70,16 @@ const CreateAccountDetail = () => {
                 <div>
                     <label>Credit/Debit:</label>
                     <input
-                        type="number"
+                        type="text"
                         name="PaymentInfo"
                         class="form-control"
+                        pattern="^\d{4}-\d{4}-\d{4}-\d{4}$"
                         value={userInfo.PaymentInfo}
                         onChange={handleChange}
                         required
                     />
                 </div>
+
                 <button type="submit" className="btn btn-primary">Update</button>
             </form>
         </div>
