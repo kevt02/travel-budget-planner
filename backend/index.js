@@ -23,6 +23,8 @@ const authRoutes = require('./routes/authRoutes');
 
 app.use('/auth', authRoutes);
 
+app.use('/auth', authRoutes);
+
 app.get('/', (request, response) => {
     const sqlQuery = "SELECT * FROM User;";
     dbConnection.query(sqlQuery, (err, result) => {
@@ -35,7 +37,7 @@ app.get('/', (request, response) => {
 });
 
 app.post('/createaccount', (request, response) => {
-   // console.log(request.body.email);
+    // console.log(request.body.email);
     const sqlQuery = 'INSERT INTO User (Email, Password) VALUES (?, ?);';
     const values = [request.body.Email, request.body.Password];
     dbConnection.query(sqlQuery, values, (err, result) => {
@@ -105,7 +107,7 @@ app.put('/stays/:city', (request, response) => {
 });
 app.get('/stays/:city/current', (request, response) => {
     const city = request.params.city;
-    const UID = request.query.UID; 
+    const UID = request.query.UID;
     const sqlQuery = "SELECT * FROM Property WHERE City = ? AND UID = ?";
     const values = [city, UID];
     dbConnection.query(sqlQuery, values, (err, result) => {
@@ -140,6 +142,7 @@ app.get('/goal/:user', (request, response) => {
         return response.status(200).json(result);
     });
 });
+
 
 
 
@@ -180,9 +183,32 @@ app.put('/:id/goals', (request, response) => {
     });
 });
 
+app.post('/:id/goals', (request, response) => {
+    const UID = request.params.id;
+    const sqlQuery = `INSERT Goals SET Budget = ?, StartCity = ?, EndCity = ?, DepartDate = ?, MaxDuration = ?, UID = ?;`;
+    const values = [request.body.Budget, request.body.StartCity, request.body.EndCity, request.body.DepartDate, request.body.MaxDuration];
+    dbConnection.query(sqlQuery, [...values, UID], (err, result) => {
+        if (err) {
+            return response.status(400).json({ Error: "Failed: Record was not updated." });
+        }
+        return response.status(200).json({ Success: "Successful: Record was updated!.", result });
+    });
+});
+
+app.get('/:id/totalprice', (request, response) => {
+    const id = request.params.id;
+    const sqlQuery = `SELECT Property.price AS 'HotelPrice' , TransportationTickets.price AS 'FlightPrice' FROM Property, TransportationTickets WHERE Property.UID = ${id};`;
+    dbConnection.query(sqlQuery, (err, result) => {
+        if (err) {
+            return response.status(400).json({ Error: "Failed: Price info not found." });
+        }
+        return response.status(200).json(result);
+    })
+});
+
 app.get('/:id/balance', (request, response) => {
     const id = request.params.id;
-    const sqlQuery = `SELECT AccountBalance FROM User WHERE uid = ${id}`;
+    const sqlQuery = `SELECT PaymentInfo, AccountBalance FROM User WHERE uid = ${id}`;
     dbConnection.query(sqlQuery, (err, result) => {
         if (err) {
             return response.status(400).json({ Error: "Failed: User info not found." });
@@ -190,6 +216,20 @@ app.get('/:id/balance', (request, response) => {
         return response.status(200).json(result);
     })
 });
+
+
+app.put('/:id/updatepayment', (request, response) => {
+    const id = request.params.id;
+    const sqlQuery = `UPDATE User SET PaymentInfo = ? WHERE UID = ${id};`;
+    const values = [request.body.PaymentInfo, id];
+    console.log(sqlQuery); // for debugging purposes:
+    dbConnection.query(sqlQuery, [...values, id], (err, result) => {
+        if (err) {
+            return response.status(400).json({ Error: "Failed: Record was not updated." });
+        }
+        return response.status(200).json({ Success: "Successful: Record was updated!." });
+    });
+})
 
 app.put('/:id/balance', (request, response) => {
     const UID = request.params.id;
