@@ -12,14 +12,14 @@ function GoalProgress() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const balanceResponse = await axios.get(`http://localhost:2000/${uid}/balance`);
+        const balanceResponse = await axios.get(`http://localhost:2000/savings/${uid}/balance`);
         // Check if there is no AccountBalance object
         if (!balanceResponse.data[0].AccountBalance) {
           setCurrentBalance(0);
         } else {
           setCurrentBalance(balanceResponse.data[0].AccountBalance);
         }
-        const budgetResponse = await axios.get(`http://localhost:2000/${uid}/goals`);
+        const budgetResponse = await axios.get(`http://localhost:2000/savings/${uid}/goals`);
 
         // Set goalBalance and update showProgressBar based on its value
         const budget = budgetResponse.data[0].Budget;
@@ -49,9 +49,9 @@ function GoalProgress() {
   return (
     <div className="goal-progress">
       {showProgressBar && (
-        <div className="progress-bar">
-          <div className="progress-bar-fill" style={{ width: `${percentage}%` }}></div>
-          <label className="progress-label">
+        <div className="goal-progress-bar">
+          <div className="goal-progress-bar-fill" style={{ width: `${percentage}%` }}></div>
+          <label className="progress-title">
             {currentBalance} out of {goalBalance} Reached!
             {percentage >= 100 && " - Goal Completed"}
           </label>

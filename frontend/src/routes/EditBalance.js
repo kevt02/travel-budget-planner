@@ -17,7 +17,7 @@ function EditBalance() {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await axios.get(`http://localhost:2000/${uid}/balance`);
+                const response = await axios.get(`http://localhost:2000/savings/${uid}/balance`);
                 console.log("get data:", response.data[0]);
                 setBalance(response.data[0].AccountBalance);
                 setPaymentInfo(response.data[0].PaymentInfo);
@@ -46,7 +46,7 @@ function EditBalance() {
         if (isConfirmed) {
             try {
                 const newBalance = parseFloat(balance) + parseFloat(userInput);
-                const response = await axios.put(`http://localhost:2000/${uid}/balance`, { AccountBalance: newBalance });
+                const response = await axios.put(`http://localhost:2000/savings/${uid}/balance`, { AccountBalance: newBalance });
 
                 console.log(response);
                 navigate('/savings');
@@ -65,7 +65,7 @@ function EditBalance() {
         }
 
         try {
-            const response = await axios.put(`http://localhost:2000/${uid}/updatepayment`, { PaymentInfo: newPaymentInfo });
+            const response = await axios.put(`http://localhost:2000/savings/${uid}/updatepayment`, { PaymentInfo: newPaymentInfo });
             console.log(response);
 
             window.location.reload();

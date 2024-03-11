@@ -19,7 +19,7 @@ function Savings() {
     } else {
       const fetchData = async () => {
         try {
-          const response = await axios.get(`http://localhost:2000/${uid}/name`);
+          const response = await axios.get(`http://localhost:2000/savings/${uid}/name`);
           setFname(response.data[0].fname);
         } catch (error) {
           console.error('Error fetching data:', error);
@@ -35,9 +35,10 @@ function Savings() {
       <div className="quadrant">
         <h1>Welcome {fname}!</h1>
         <GoalProgress />
+        <br/>
         <div className="usersettings">
-          <Link to="/editbalance" className="settings">Add Credit</Link>
-          <Link to="/editgoal" className="settings">Edit Goal</Link>
+          <Link to="/editbalance" className="btn btn-warning">Add Credit</Link>
+          <Link to="/editgoal" className="btn btn-warning">Edit Goal</Link>
         </div>
       </div>
       <div className="quadrant"><DisplayFlights /></div>

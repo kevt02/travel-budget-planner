@@ -17,7 +17,7 @@ function Graph() {
 
     const fetchUserData = async () => {
         try {
-            const response = await fetch(`http://localhost:2000/${uid}/goals`);
+            const response = await fetch(`http://localhost:2000/savings/${uid}/goals`);
             const responseData = await response.json();
     
             setStartCity(responseData[0].StartCity);
@@ -133,12 +133,7 @@ function Graph() {
     return (
         <div className="graph">
             {graphRendered ? null : (
-                <button className="price-button" onClick={fetchUserData}>
-                    Check Prices
-                </button>
-            )}
-            {graphRendered ? null : (
-                <button className="price-button" onClick={fetchUserData}>
+                <button className="btn btn-warning" onClick={fetchUserData}>
                     Check Prices
                 </button>
             )}

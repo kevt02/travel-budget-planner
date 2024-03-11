@@ -24,12 +24,12 @@ const CreateAccount = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await axios.post("http://localhost:2000/createaccount", credentials);
+            const response = await axios.post("http://localhost:2000/createaccount/createaccount", credentials);
             console.log(response.data);
 
             // Extract UID from credentials and navigate to the URL with UID
             const { Email } = credentials;
-            const UIDResponse = await axios.get(`http://localhost:2000/email/${Email}`);
+            const UIDResponse = await axios.get(`http://localhost:2000/createaccount/email/${Email}`);
 
             const temp = UIDResponse.data;
             console.log(temp[0]); // Logging to check the structure of the response data
@@ -49,41 +49,46 @@ const CreateAccount = () => {
 
 
     return (
-        <div className="container">
-            <h2>Create an account</h2>
-            <form onSubmit={handleSubmit}>
-                <div>
-                    <label>Email: </label>
-                    <input
-                        type="email"
-                        name="Email"
-                        className="form-control"
-                        value={credentials.Email}
-                        onChange={handleChange}
-                        required
-                    />
-                </div>
-                <div>
-                    <label>Password: </label>
-                    <input
-                        type="password"
-                        name="Password"
-                        className="form-control"
-                        value={credentials.Password}
-                        onChange={handleChange}
-                        required
-                    />
-                </div>
-                {errorMessage && <div class="alert alert-dismissible alert-danger">
-                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-                    <strong>Email already exist! Please try different email.</strong>
-                </div>}
-                <button type="submit" className="btn btn-primary">Create Account</button>
-                <br />
-                <br />
-                <Link to="/login" className="btn btn-primary">Already Have an Account?</Link>
-            </form>
+        <div className="createaccount">   
+            <img src="https://static.toiimg.com/photo/86650932.cms" alt="Travel Person" />
+            <div className="container">
+
+                <h2>Create an account</h2>
+                <form onSubmit={handleSubmit}>
+                    <div>
+                        <label>Email: </label>
+                        <input
+                            type="email"
+                            name="Email"
+                            className="form-control"
+                            value={credentials.Email}
+                            onChange={handleChange}
+                            required
+                        />
+                    </div>
+                    <div>
+                        <label>Password: </label>
+                        <input
+                            type="password"
+                            name="Password"
+                            className="form-control"
+                            value={credentials.Password}
+                            onChange={handleChange}
+                            required
+                        />
+                    </div>
+                    {errorMessage && <div class="alert alert-dismissible alert-danger">
+                        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                        <strong>Email already exist! Please try different email.</strong>
+                    </div>}
+                    <button type="submit" className="btn btn-warning">Create Account</button>
+                    <br />
+                    <br />
+                    <Link to="/login" className="btn btn-warning">Already Have an Account?</Link>
+                </form>
+            </div>
         </div>
+
     );
 };
 

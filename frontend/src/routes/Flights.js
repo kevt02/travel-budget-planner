@@ -90,7 +90,7 @@ function Flights() {
     try {
       const response = await axios.post('http://localhost:2000/auth/saveFlight', flightDataWithUID);
       console.log('Flight saved:', response.data);
-      navigate('/'); 
+      navigate('/savings'); 
     } catch (error) {
      
       console.error('Error saving flight:', error.response ? error.response.data : error);
@@ -124,7 +124,7 @@ function Flights() {
           onChange={(e) => setDate(e.target.value)}
           placeholder="Departure Date"
         />
-        <button onClick={fetchFlightData}>Search</button>
+        <button onClick={fetchFlightData} className="btn btn-warning">Search</button>
       </div>
       
       <div className="flight-results">
@@ -153,7 +153,7 @@ function Flights() {
                     </div>
                   </div>
                 </div>
-                <button className="apply-button" onClick={() => saveFlightData(flight)}>
+                <button className="btn btn-warning" onClick={() => saveFlightData(flight)}>
                   Apply
                 </button>
               </div>
@@ -163,7 +163,7 @@ function Flights() {
           )
         )}
       </div>
-      <Link to="/" className="back-home-link">Back to Home Page</Link>
+      <Link to="/" className="btn btn-warning">Back to Home Page</Link>
     </div>
   );
 }

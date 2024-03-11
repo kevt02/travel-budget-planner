@@ -34,7 +34,7 @@ const CreateAccountDetail = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await axios.put(decodeURI("http://localhost:2000/createaccount/" + uid), userInfo)
+            const response = await axios.put(decodeURI("http://localhost:2000/createaccount/createaccount/" + uid), userInfo)
             navigate("/setgoal");
         } catch (err) {
             console.log("Error: " + err);
@@ -80,7 +80,7 @@ const CreateAccountDetail = () => {
                     />
                 </div>
 
-                <button type="submit" className="btn btn-primary">Update</button>
+                <button type="submit" className="btn btn-warning">Update</button>
             </form>
         </div>
     );

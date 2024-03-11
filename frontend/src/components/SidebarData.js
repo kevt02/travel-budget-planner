@@ -11,7 +11,7 @@ export const SidebarData = [
     cName: "nav-text",
   },
   {
-    title: "Travel Type",
+    title: "Flights",
     path: "/flights",
     icon: <FaIcons.FaSuitcaseRolling />,
     cName: "nav-text",
@@ -27,13 +27,6 @@ export const SidebarData = [
     title: "Currency Rate",
     path: "/currency",
     icon: <FaIcons.FaMoneyBill />,
-    cName: "nav-text",
-  },
-
-   {
-    title: "Preferences",
-    path: "/preferences",
-    icon: <FaIcons.FaHotel />,
     cName: "nav-text",
   },
   {

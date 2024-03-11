@@ -32,32 +32,40 @@ const LogIn = () => {
     };
 
     return (
-        <div className="container">
-            <h2>Log In</h2>
-            <form onSubmit={handleSubmit}>
-                <div>
-                    <label>Email:</label>
-                    <input
-                        type="email"
-                        name="email"
-                        value={credentials.email}
-                        onChange={handleChange}
-                        required
-                    />
-                </div>
-                <div>
-                    <label>Password:</label>
-                    <input
-                        type="password"
-                        name="password"
-                        value={credentials.password}
-                        onChange={handleChange}
-                        required
-                    />
-                </div>
-                <button type="submit">Log In</button>
-            </form>
+        <div className="loginpage">
+            <img src="https://qph.cf2.quoracdn.net/main-qimg-e50b26ef8f519d5b0f14407159bf1851-lq" alt="Travel Person" />
+            <div className="container">
+                <h2>Log In</h2>
+                <form onSubmit={handleSubmit}>
+                    <div>
+                        <label>Email:</label>
+                        <br />
+                        <input
+                            type="email"
+                            name="email"
+                            value={credentials.email}
+                            onChange={handleChange}
+                            required
+                            style={{ width: '300px' }}
+                        />
+                    </div>
+                    <div>
+                        <label>Password:</label>
+                        <br />
+                        <input
+                            type="password"
+                            name="password"
+                            value={credentials.password}
+                            onChange={handleChange}
+                            required
+                            style={{ width: '300px' }}
+                        />
+                    </div>
+                    <button type="submit" className="btn btn-warning">Log In</button>
+                </form>
+            </div>
         </div>
+
     );
 };
 

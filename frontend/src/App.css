@@ -362,7 +362,7 @@ sidebar-items {
   }
 }
 
-.progress-bar {
+.goal-progress-bar {
   text-align: center;
   width: 100%;
   height: 30px;
@@ -370,7 +370,7 @@ sidebar-items {
   background-color: grey;
 }
 
-.progress-bar-fill {
+.goal-progress-bar-fill {
   height: 100%;
   border-radius: 10px;
   background-color: orange;
@@ -399,10 +399,16 @@ sidebar-items {
 
 
 .usersettings {
-  padding: 50px;
-  margin: auto;
-  text-align: center;
-  width: fit-content;
+  position: relative;
+  left: 25%;
+  justify-content: space-between;
+  display: flex;
+  padding: 10px;
+  width: 50%;
+}
+
+.btn.btn-warning {
+  margin: 10px;
 }
 
 .settings {
@@ -439,4 +445,56 @@ sidebar-items {
 }
 .edit input {
   margin-right: 20px;
+}
+
+.stay-tab {
+  width: 70%;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  margin-bottom: 20px;
+  margin-top: 2%;
+}
+
+.stay-image img {
+  width: 150px;
+  height: 150px;
+  margin-right: 20px;
+}
+
+.stay-details {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.stay-details-column {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.stay-details-column p {
+  margin: 0;
+}
+
+.stay-details .apply-button {
+  align-self: flex-end;
+  width: fit-content;
+  /* Ensure button width fits its content */
+}
+
+.button {
+  text-align: right;
+}
+
+.btn.btn-primary {
+  width: 30%;
+}
+
+.displayflights {
+  flex: 1;
 }
