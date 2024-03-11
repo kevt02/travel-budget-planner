@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import { useParams } from "react-router-dom";
-import Staystab from "./StaysTab";
+import Staystab from "./../components/StaysTab";
 import { useAuth } from '../components/AuthContext';
 function Stays() {
     const { uid } = useAuth();
@@ -11,9 +10,8 @@ function Stays() {
 
     const [city, setCity] = useState(""); // State to store city
     const [stay, setStay] = useState([]); // State to store stays data
-    const [current, setCurrent] = useState([]);
+    const [current, setCurrent] = useState([]); // State to store the current booking
     useEffect(() => {
-        // Fetch user's city using UID
         axios.get(`http://localhost:2000/goal/${uid}`)
             .then((res) => {
                 console.log(res);
@@ -31,11 +29,10 @@ function Stays() {
 
 
     useEffect(() => {
-        // Fetch stays data for the retrieved city
         axios.get(`http://localhost:2000/stays/${city}?UID=${uid}`)
             .then((res) => {
                 console.log(res);
-                setStay(res.data); // Set stays data in state
+                setStay(res.data); 
             })
             .catch((err) => console.log("Error: ", err));
 
@@ -45,19 +42,17 @@ function Stays() {
         axios.get(`http://localhost:2000/stays/${city}/current?UID=${uid}`)
             .then((res) => {
                 console.log(res);
-                setCurrent(res.data[0]); // Set stays data in state
+                setCurrent(res.data[0]);
             })
             .catch((err) => console.log("Error fetching stays data:", err));
     }, [city, uid]);
 
 
-
-    // Render the hotel options
     return (
         <>
             {city !== "" ? (
                 <div>
-                    <h1 className="stays">Current Booking</h1>
+                    <h1 className="message">Current Booking</h1>
                     {current && current.Name && (
                         <div className="stay-tab">
                             <div className="stay-image">
@@ -72,14 +67,14 @@ function Stays() {
                         </div>
                     )}
 
-                    <h1 className="stays">Explore</h1>
+                    <h1 className="message">Explore</h1>
                     {/* Render other stays */}
                     {stay.map(hotel => (
                         <Staystab key={hotel.id} hotel={hotel} />
                     ))}
                 </div>
             ) : (
-                <h1 className="Message">Please choose your goal first</h1>
+                <h1 className="message">Please choose your goal first</h1>
             )}
 
         </>

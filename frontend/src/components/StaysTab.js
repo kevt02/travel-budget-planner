@@ -1,7 +1,7 @@
 import './Stays.css'
 import axios from "axios";
 import { useParams } from "react-router-dom";
-import { useAuth } from '../components/AuthContext';
+import { useAuth } from './AuthContext';
 import { useNavigate, Link } from 'react-router-dom';
 
 function StayTab({ hotel }) {
@@ -41,7 +41,7 @@ function StayTab({ hotel }) {
                 <p className="stay-rating">Rating: {hotel.Rating != null ? `${hotel.Rating}` : "---"}</p>
                 <p className="stay-location">Location: {hotel.Address}</p>
                 <div className="button">
-                    <button className="btn btn-primary" onClick={handleSubmit}>Apply</button>
+                    <button className="btn btn-warning" onClick={handleSubmit}>Apply</button>
                 </div>
             </div>
         
