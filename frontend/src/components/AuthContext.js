@@ -1,9 +1,20 @@
-import React, { createContext, useContext, useState } from 'react';
+import React, { createContext, useContext, useState, useEffect } from 'react';
 
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
-  const [authState, setAuthState] = useState({ isLoggedIn: false, uid: null });
+  // Check if there's an auth state stored in localStorage
+  const storedAuthState = JSON.parse(localStorage.getItem('authState')) || {
+    isLoggedIn: false,
+    uid: null,
+  };
+
+  const [authState, setAuthState] = useState(storedAuthState);
+
+  useEffect(() => {
+    // Update localStorage whenever authState changes
+    localStorage.setItem('authState', JSON.stringify(authState));
+  }, [authState]);
 
   const login = (uid) => {
     setAuthState({ isLoggedIn: true, uid });

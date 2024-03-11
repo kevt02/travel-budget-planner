@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 import { useAuth } from '../components/AuthContext';
+import GoalProgress from '../components/GoalProgress';
 
 function Savings() {
   const [fname, setFname] = useState('');
@@ -40,6 +41,7 @@ function Savings() {
         <Link to="/editbalance" className="settings">Add Credit</Link>
         <Link to="/editgoal" className="settings">Edit Goal</Link>
     </div>
+    <GoalProgress />
       <Graph />
     </div>
   );

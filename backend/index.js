@@ -102,7 +102,7 @@ app.put('/:id/goals', (request, response) => {
 
 app.get('/:id/balance', (request, response) => {
   const id = request.params.id;
-  const sqlQuery = `SELECT AccountBalance FROM User WHERE uid = ${id}`;
+  const sqlQuery = `SELECT PaymentInfo, AccountBalance FROM User WHERE uid = ${id}`;
   dbConnection.query(sqlQuery, (err, result) => {
     if (err) {
       return response.status(400).json({ Error: "Failed: User info not found." });
@@ -110,6 +110,32 @@ app.get('/:id/balance', (request, response) => {
     return response.status(200).json(result);
   })
 });
+
+app.get('/:id/totalprice', (request, response) => {
+  const id = request.params.id;
+  const sqlQuery = `SELECT Property.price AS 'HotelPrice' , TransportationTickets.price AS 'FlightPrice' FROM Property, TransportationTickets WHERE Property.UID = ${id};`;
+  dbConnection.query(sqlQuery, (err, result) => {
+    if (err) {
+      return response.status(400).json({ Error: "Failed: Price info not found." });
+    }
+    return response.status(200).json(result);
+  })
+});
+
+app.put('/:id/updatepayment', (request, response) => {
+  const id = request.params.id;
+  const sqlQuery = `UPDATE User SET PaymentInfo = ? WHERE UID = ${id};`;
+  const values = [request.body.PaymentInfo, id];
+  console.log(sqlQuery); // for debugging purposes:
+  dbConnection.query(sqlQuery, [...values, id], (err, result) => {
+    if (err) {
+      return response.status(400).json({ Error: "Failed: Record was not updated." });
+    }
+    return response.status(200).json({ Success: "Successful: Record was updated!." });
+  });
+})
+
+
 
 app.put('/:id/balance', (request, response) => {
   const UID = request.params.id;
