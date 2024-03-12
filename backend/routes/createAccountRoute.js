@@ -6,6 +6,37 @@ const router = express.Router();
 router.use (express.json());
 router.use(cors());
 
+/**
+ * @swagger
+ * /createaccount:
+ *   post:
+ *     summary: Create a new user account
+ *     tags: [User]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               Email:
+ *                 type: string
+ *               Password:
+ *                 type: string
+ *     responses:
+ *       200:
+ *         description: Successful operation
+ *         content:
+ *           application/json:
+ *             example:
+ *               Success: "Successful: Record was added!."
+ *       400:
+ *         description: Failed operation
+ *         content:
+ *           application/json:
+ *             example:
+ *               Error: "Failed: Record was not added."
+ */
 router.post('/createaccount', (request, response) => {
     // console.log(request.body.email);
     const sqlQuery = 'INSERT INTO User (Email, Password) VALUES (?, ?);';
@@ -18,7 +49,45 @@ router.post('/createaccount', (request, response) => {
     });
 });
 
-
+/**
+ * @swagger
+ * /createaccount/{user}:
+ *   put:
+ *     summary: Update user information
+ *     tags: [User]
+ *     parameters:
+ *       - in: path
+ *         name: user
+ *         required: true
+ *         schema:
+ *           type: string
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               FName:
+ *                 type: string
+ *               LName:
+ *                 type: string
+ *               PaymentInfo:
+ *                 type: string
+ *     responses:
+ *       200:
+ *         description: Successful operation
+ *         content:
+ *           application/json:
+ *             example:
+ *               Success: "Successful: Record was updated!."
+ *       400:
+ *         description: Failed operation
+ *         content:
+ *           application/json:
+ *             example:
+ *               Error: "Failed: Record was not added."
+ */
 
 router.put('/createaccount/:user', (request, response) => {
     const user = request.params.user;
@@ -34,6 +103,32 @@ router.put('/createaccount/:user', (request, response) => {
     });
 });
 
+/**
+ * @swagger
+ * /email/{userEmail}:
+ *   get:
+ *     summary: Get user ID by email
+ *     tags: [User]
+ *     parameters:
+ *       - in: path
+ *         name: userEmail
+ *         required: true
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: Successful operation
+ *         content:
+ *           application/json:
+ *             example:
+ *               - UID: 123
+ *       400:
+ *         description: Failed operation
+ *         content:
+ *           application/json:
+ *             example:
+ *               Error: "Error in the SQL statement. Please check."
+ */
 router.get('/email/:userEmail', (request, response) => {
     const userEmail = request.params.userEmail;
     const sqlQuery = "SELECT UID FROM User Where Email = '" + userEmail + "'";

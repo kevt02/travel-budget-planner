@@ -6,6 +6,45 @@ const router = express.Router();
 router.use(express.json());
 router.use(cors());
 
+/**
+ * @swagger
+ * /properties/{city}:
+ *   get:
+ *     summary: Get available properties by city
+ *     tags: 
+ *       - Properties
+ *     parameters:
+ *       - in: path
+ *         name: city
+ *         required: true
+ *         schema:
+ *           type: string
+ *       - in: query
+ *         name: UID
+ *         description: User ID for filtering properties
+ *         required: false
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: Successful operation
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 $ref: '#/definitions/Property'
+ *      400:
+ *         description: Failed: Error in the SQL statement. Please check.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 Error:
+ *                   type: string
+ */
+
 router.get('/:city', (request, response) => {
     const city = request.params.city;
     const UID = request.query.UID; // Retrieve UID from query parameter
@@ -21,6 +60,43 @@ router.get('/:city', (request, response) => {
 });
 
 
+/**
+ * @swagger
+ * /properties/{city}:
+ *   get:
+ *     summary: Get available properties by city
+ *     tags: [Properties]
+ *     parameters:
+ *       - in: path
+ *         name: city
+ *         required: true
+ *         schema:
+ *           type: string
+ *       - in: query
+ *         name: UID
+ *         description: User ID for filtering properties
+ *         required: false
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: Successful operation
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 $ref: '#/definitions/Property'
+ *       400:
+ *         description: Failed: Error in the SQL statement. Please check.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 Error:
+ *                   type: string
+ */
 
 router.put('/:city', (request, response) => {
     const sqlQuery = "UPDATE Property AS t1 SET t1.UID = ? "
