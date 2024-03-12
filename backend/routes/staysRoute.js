@@ -8,41 +8,27 @@ router.use(cors());
 
 /**
  * @swagger
- * /properties/{city}:
+ * /{city}:
  *   get:
- *     summary: Get available properties by city
- *     tags: 
- *       - Properties
+ *     summary: Get properties in a city
  *     parameters:
- *       - in: path
- *         name: city
+ *       - name: city
+ *         in: path
  *         required: true
  *         schema:
  *           type: string
- *       - in: query
- *         name: UID
- *         description: User ID for filtering properties
- *         required: false
+ *           description: City name*
+ *       - name: UID
+ *         in: query
  *         schema:
  *           type: string
+ *           description: User ID for filtering properties*
  *     responses:
- *       200:
- *         description: Successful operation
- *         content:
- *           application/json:
- *             schema:
- *               type: array
- *               items:
- *                 $ref: '#/definitions/Property'
- *      400:
- *         description: Failed: Error in the SQL statement. Please check.
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 Error:
- *                   type: string
+ *       '200':
+ *         description: Successful response
+ *       '400':
+ *         description: Error in the SQL statement
+ *         content: {}
  */
 
 router.get('/:city', (request, response) => {
@@ -62,40 +48,34 @@ router.get('/:city', (request, response) => {
 
 /**
  * @swagger
- * /properties/{city}:
- *   get:
- *     summary: Get available properties by city
- *     tags: [Properties]
+ * /{city}:
+ *   put:
+ *     summary: Update property UID in a city
  *     parameters:
- *       - in: path
- *         name: city
+ *       - name: city
+ *         in: path
  *         required: true
  *         schema:
  *           type: string
- *       - in: query
- *         name: UID
- *         description: User ID for filtering properties
- *         required: false
+ *           description: City name*
+ *       - name: body
+ *         in: body
+ *         required: true
  *         schema:
- *           type: string
+ *           type: object
+ *           properties:
+ *             UID:
+ *               type: string
+ *               description: User ID for the update*
+ *             PropID:
+ *               type: integer
+ *               description: Property ID for the update*
  *     responses:
- *       200:
- *         description: Successful operation
- *         content:
- *           application/json:
- *             schema:
- *               type: array
- *               items:
- *                 $ref: '#/definitions/Property'
- *       400:
- *         description: Failed: Error in the SQL statement. Please check.
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 Error:
- *                   type: string
+ *       '200':
+ *         description: Successful update
+ *       '400':
+ *         description: Failed to update record
+ *        
  */
 
 router.put('/:city', (request, response) => {
@@ -111,6 +91,31 @@ router.put('/:city', (request, response) => {
         return response.status(200).json({ Success: "Successful: Record was updated!." });
     });
 });
+
+/**
+ * @swagger
+ * /{city}/current:
+ *   get:
+ *     summary: Get current properties in a city for a specific UID
+ *     parameters:
+ *       - name: city
+ *         in: path
+ *         required: true
+ *         schema:
+ *           type: string
+ *           description: City name*
+ *       - name: UID
+ *         in: query
+ *         schema:
+ *           type: string
+ *           description: User ID for filtering current properties*
+ *     responses:
+ *       '200':
+ *         description: Successful response
+ *       '400':
+ *         description: Error in the SQL statement
+ *         
+ */
 router.get('/:city/current', (request, response) => {
     const city = request.params.city;
     const UID = request.query.UID;
@@ -125,6 +130,35 @@ router.get('/:city/current', (request, response) => {
     });
 });
 
+
+/**
+ * @swagger
+ * /{city}/reset:
+ *   put:
+ *     summary: Reset UID for all properties in a city
+ *     parameters:
+ *       - name: city
+ *         in: path
+ *         required: true
+ *         schema:
+ *           type: string
+ *           description: City name*
+ *       - name: body
+ *         in: body
+ *         required: true
+ *         schema:
+ *           type: object
+ *           properties:
+ *             UID:
+ *               type: string
+ *               description: User ID for the reset*
+ *     responses:
+ *       '200':
+ *         description: Successful reset
+ *       '400':
+ *         description: Failed to reset records
+ *         
+ */
 router.put('/:city/reset', (request, response) => {
     const sqlQuery = "UPDATE Property SET UID = NULL WHERE UID = ?";
     const values = [request.body.UID];

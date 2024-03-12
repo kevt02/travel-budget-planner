@@ -10,7 +10,6 @@ const { login } = require('./loginRoute');
 const { saveFlight, getFlightsByUserId } = require('./flightsRoute');
 
 
-// Define the route for logging in
 /**
  * @swagger
  * /login:
@@ -24,10 +23,10 @@ const { saveFlight, getFlightsByUserId } = require('./flightsRoute');
  *           schema:
  *             type: object
  *             required:
- *               - username
+ *               - email
  *               - password
  *             properties:
- *               username:
+ *               email:
  *                 type: string
  *               password:
  *                 type: string
@@ -38,7 +37,6 @@ const { saveFlight, getFlightsByUserId } = require('./flightsRoute');
  *         description: Authentication failed.
  */
 router.post('/login', login);  // Route for user login
-
 
 
 /**
@@ -52,7 +50,44 @@ router.post('/login', login);  // Route for user login
  *       content:
  *         application/json:
  *           schema:
- *             $ref: '#/components/schemas/Flight'
+ *             type: object
+ *             properties:
+ *               UID:
+ *                 type: string
+ *                 description: The user's unique identifier
+ *               FlightCode:
+ *                 type: string
+ *                 description: The flight's code
+ *               DepartureAirportCode:
+ *                 type: string
+ *                 description: The airport code for the departure location
+ *               DepartureAirportName:
+ *                 type: string
+ *                 description: The name of the departure airport
+ *               ArrivalAirportCode:
+ *                 type: string
+ *                 description: The airport code for the arrival location
+ *               ArrivalAirportName:
+ *                 type: string
+ *                 description: The name of the arrival airport
+ *               DepartureDate:
+ *                 type: string
+ *                 format: date
+ *                 description: The date of departure
+ *               DepartureTime:
+ *                 type: string
+ *                 description: The time of departure
+ *               ArrivalDate:
+ *                 type: string
+ *                 format: date
+ *                 description: The date of arrival
+ *               ArrivalTime:
+ *                 type: string
+ *                 description: The time of arrival
+ *               Price:
+ *                 type: number
+ *                 format: float
+ *                 description: The price of the flight ticket
  *     responses:
  *       200:
  *         description: Flight information saved successfully.
@@ -60,7 +95,6 @@ router.post('/login', login);  // Route for user login
  *         description: Bad request.
  */
 router.post('/saveFlight', saveFlight);
-
 
 /**
  * @swagger
@@ -73,7 +107,7 @@ router.post('/saveFlight', saveFlight);
  *         name: userId
  *         required: true
  *         schema:
- *           type: string
+ *           type: int
  *         description: The user ID.
  *     responses:
  *       200:
@@ -86,15 +120,11 @@ router.get('/:userId/flight', getFlightsByUserId);
 
 /**
  * @swagger
- * /:
- *   get:
- *     summary: Root Endpoint
- *     description: Returns the default API welcome message.
- *     responses:
- *       200:
- *         description: Welcome to the API.
+ *  /:
+ * get:
+ *    summary: Retrieve default (root) API response message
+ * 
  */
-
 router.get('/', (req, res) => {
     res.json({ message: 'Welcome to the API' });
 });

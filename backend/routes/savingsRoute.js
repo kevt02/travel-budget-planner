@@ -12,6 +12,13 @@ router.use(cors());
  *   /{id}/name:
  *     get:
  *       summary: "Get user's first and last name"
+ *       parameters:
+ *         - in: path
+ *           name: userId
+ *           required: true
+ *           schema:
+ *             type: int
+ *           description: The user ID.
  *       responses:
  *         '200':
  *           description: "An object containing the first and last name"
@@ -19,7 +26,9 @@ router.use(cors());
  *             application/json:
  *               schema:
  *                 type: object
+ *               
  *                 properties:
+ *       
  *                   fname:
  *                     type: string
  *                     example: "John"
@@ -59,7 +68,7 @@ router.get('/:id/name', (request, response) => {
  *       - Goals
  *     parameters:
  *       - in: path
- *         name: id
+ *         userid: id
  *         required: true
  *         schema:
  *           type: integer
