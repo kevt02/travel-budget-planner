@@ -20,8 +20,9 @@ function Stays() {
                     navigate(`/savings`);
                 } else {
                     const endCity = res.data[0].EndCity;
-                    console.log(endCity);
+                   
                     setCity(endCity);
+                    console.log(endCity);
                 }
             })
             .catch((err) => console.log("Error: ", err));
@@ -41,13 +42,15 @@ function Stays() {
     useEffect(() => {
         axios.get(`http://localhost:2000/stays/${city}/current?UID=${uid}`)
             .then((res) => {
-                //console.log(res.data);
-                setCurrent(res.data[0]);
-                console.log(res);
+                if (res.data && res.data.length > 0) {
+                    setCurrent(res.data[0]);
+                    console.log(res.data[0]);
+                } else {
+                    console.log("No current booking found.");
+                }
             })
             .catch((err) => console.log("Error fetching stays data:", err));
-    }, [city, uid]);
-
+    }, [city, uid]);    
 
     return (
         <>

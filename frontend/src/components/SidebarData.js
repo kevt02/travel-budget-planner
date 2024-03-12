@@ -28,12 +28,7 @@ export const SidebarData = [
     path: "/currency",
     icon: <FaIcons.FaMoneyBill />,
     cName: "nav-text",
-  },
-  {
-    title: "About Us",
-    path: "/",
-    icon: <AiIcons.AiFillHome />,
-    cName: "nav-text",
   }
+
 
 ];

@@ -18,7 +18,7 @@ function Header() {
 
   return (
     <nav className="header">
-        <Link to="/" className="title">
+        <Link to="/createaccount" className="title">
             <GiPiggyBank />
             Penny Pilot
         </Link>

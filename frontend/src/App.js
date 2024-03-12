@@ -22,9 +22,6 @@ import EditBalance from './routes/EditBalance';
 import Preferences from './routes/Preferences';
 
 
-
-
-
 function App() {
     return (
         <AuthProvider>
