@@ -1,36 +1,51 @@
 const express = require("express");
 const cors = require("cors");
-const dbConnection = require("./config.js");
-var bodyParser = require('body-parser');
-const app = express(express.json);
+const bodyParser = require('body-parser');
+const swaggerJSdoc = require("swagger-jsdoc");
+const swaggerUI = require("swagger-ui-express");
 
+const app = express();
+app.use(express.json());
+app.use(cors());
+app.use(bodyParser.json());
 
-
-// ----------------------------------------------
-// Import route for authentication
-// ----------------------------------------------
+// Import routes
 const authRoutes = require('./routes/mainRoute');
 const createAccountRoute = require('./routes/createAccountRoute');
 const savingsRoute = require('./routes/savingsRoute');
 const staysRoute = require('./routes/staysRoute');
 
-app.use(cors());
-app.use(bodyParser.json());
-
-
-
-// ----------------------------------------------
-// Route middleware for authentication
-// ----------------------------------------------
-
+// Use routes
+app.use('/', authRoutes);
 app.use('/auth', authRoutes);
 app.use('/createaccount', createAccountRoute);
 app.use('/savings', savingsRoute);
 app.use('/stays', staysRoute);
 
+const PORT = 2000;
+
+// Swagger JS DOC configuration
+const APIDocOptions = {
+  definition: {
+    openapi: '3.0.0',
+    info: {
+      title: 'RESTful API',
+      description: 'An API for website',
+      version: '1.0.0',
+      servers: [`http://localhost:${PORT}`]
+    },
+    
+  },
+  apis: ['./routes/*.js'], // Files containing API routes
+}
 
 
 
-app.listen(2000, () => {
-  console.log("Express server is running and listening");
+const APIDocs = swaggerJSdoc(APIDocOptions);
+app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(APIDocs));
+
+
+
+app.listen(PORT, () => {
+  console.log(`Express server is running and listening on port ${PORT}`);
 });
