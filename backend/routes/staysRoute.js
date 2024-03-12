@@ -8,7 +8,7 @@ router.use(cors());
 
 /**
  * @swagger
- * /{city}:
+ * /stays/{city}:
  *   get:
  *     summary: Get properties in a city
  *     parameters:
@@ -48,7 +48,7 @@ router.get('/:city', (request, response) => {
 
 /**
  * @swagger
- * /{city}:
+ * /stays/{city}:
  *   put:
  *     summary: Update property UID in a city
  *     parameters:
@@ -133,7 +133,7 @@ router.get('/:city/current', (request, response) => {
 
 /**
  * @swagger
- * /{city}/reset:
+ * /stays/{city}/reset:
  *   put:
  *     summary: Reset UID for all properties in a city
  *     parameters:

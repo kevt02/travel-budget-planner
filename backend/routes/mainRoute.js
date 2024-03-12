@@ -41,7 +41,7 @@ router.post('/login', login);  // Route for user login
 
 /**
  * @swagger
- * /saveFlight:
+ * /auth/saveFlight:
  *   post:
  *     summary: Save flight information
  *     description: Saves a user's flight information.
@@ -52,39 +52,39 @@ router.post('/login', login);  // Route for user login
  *           schema:
  *             type: object
  *             properties:
- *               UID:
- *                 type: string
+ *               userId:
+ *                 type: integer
  *                 description: The user's unique identifier
- *               FlightCode:
+ *               flightCode:
  *                 type: string
  *                 description: The flight's code
- *               DepartureAirportCode:
+ *               departureAirport:
  *                 type: string
  *                 description: The airport code for the departure location
- *               DepartureAirportName:
+ *               departureAirportName:
  *                 type: string
  *                 description: The name of the departure airport
- *               ArrivalAirportCode:
+ *               arrivalAirport:
  *                 type: string
  *                 description: The airport code for the arrival location
- *               ArrivalAirportName:
+ *               arrivalAirportName:
  *                 type: string
  *                 description: The name of the arrival airport
- *               DepartureDate:
+ *               departureDate:
  *                 type: string
  *                 format: date
  *                 description: The date of departure
- *               DepartureTime:
+ *               departureTime:
  *                 type: string
  *                 description: The time of departure
- *               ArrivalDate:
+ *               arrivalDate:
  *                 type: string
  *                 format: date
  *                 description: The date of arrival
- *               ArrivalTime:
+ *               arrivalTime:
  *                 type: string
  *                 description: The time of arrival
- *               Price:
+ *               price:
  *                 type: number
  *                 format: float
  *                 description: The price of the flight ticket
