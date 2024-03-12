@@ -4,14 +4,12 @@ import { Link } from 'react-router-dom';
 import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 import { useAuth } from '../components/AuthContext';
+import GoalProgress from '../components/GoalProgress';
+import DisplayFlights from '../components/DisplayFlights';
 
 function Savings() {
   const [fname, setFname] = useState('');
-  const [lname, setLname] = useState('');
-
-  // const { uid } = useParams();
-
-  const { isLoggedIn, uid, login, logout } = useAuth();
+  const { isLoggedIn, uid } = useAuth();
 
   const navigate = useNavigate();
 
@@ -21,25 +19,29 @@ function Savings() {
     } else {
       const fetchData = async () => {
         try {
-          const response = await axios.get(`http://localhost:2000/${uid}/name`);
+          const response = await axios.get(`http://localhost:2000/savings/${uid}/name`);
           setFname(response.data[0].fname);
-          setLname(response.data[0].lname);
         } catch (error) {
           console.error('Error fetching data:', error);
         }
       };
 
-      fetchData(); // Call the async function
+      fetchData();
     }
   }, [uid, navigate]);
 
   return (
     <div className="savings">
-      <h1>Welcome {fname}!</h1>
-      <div className="usersettings">
-        <Link to="/editbalance" className="settings">Add Credit</Link>
-        <Link to="/editgoal" className="settings">Edit Goal</Link>
+      <div className="quadrant">
+        <h1>Welcome {fname}!</h1>
+        <GoalProgress />
+        <br/>
+        <div className="usersettings">
+          <Link to="/editbalance" className="btn btn-warning">Add Credit</Link>
+          <Link to="/editgoal" className="btn btn-warning">Edit Goal</Link>
+        </div>
       </div>
+      <div className="quadrant"><DisplayFlights /></div>
       <Graph />
     </div>
   );

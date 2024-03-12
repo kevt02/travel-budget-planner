@@ -4,7 +4,7 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 function EditGoal() {
 
-    const { isLoggedIn, uid, login, logout } = useAuth();
+    const { uid } = useAuth();
 
     const navigate = useNavigate();
 
@@ -19,7 +19,7 @@ function EditGoal() {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await axios.get(`http://localhost:2000/${uid}/goals`);
+                const response = await axios.get(`http://localhost:2000/savings/${uid}/goals`);
                 console.log("get data:", response.data[0]);
 
                 // Update state using functional update to ensure correct order
@@ -58,7 +58,7 @@ function EditGoal() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await axios.put(decodeURI(`http://localhost:2000/${uid}/goals`), goals);
+            const response = await axios.put(decodeURI(`http://localhost:2000/savings/${uid}/goals`), goals);
             console.log(response);
             console.log("submitted goals", goals);
             navigate(`/savings`);

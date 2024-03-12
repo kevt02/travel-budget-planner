@@ -12,7 +12,7 @@ export const AuthProvider = ({ children }) => {
   const [authState, setAuthState] = useState(storedAuthState);
 
   useEffect(() => {
-    // Update localStorage whenever authState changes
+    // Update localStorage whenever authState changes to prevent logout on refresh
     localStorage.setItem('authState', JSON.stringify(authState));
   }, [authState]);
 

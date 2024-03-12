@@ -12,7 +12,7 @@ function Stays() {
     const [stay, setStay] = useState([]); // State to store stays data
     const [current, setCurrent] = useState([]); // State to store the current booking
     useEffect(() => {
-        axios.get(`http://localhost:2000/goal/${uid}`)
+        axios.get(`http://localhost:2000/savings/${uid}/goals/`)
             .then((res) => {
                 console.log(res);
                 if (res.data.length === 0) {
@@ -32,7 +32,7 @@ function Stays() {
         axios.get(`http://localhost:2000/stays/${city}?UID=${uid}`)
             .then((res) => {
                 console.log(res);
-                setStay(res.data); 
+                setStay(res.data);
             })
             .catch((err) => console.log("Error: ", err));
 
@@ -41,8 +41,9 @@ function Stays() {
     useEffect(() => {
         axios.get(`http://localhost:2000/stays/${city}/current?UID=${uid}`)
             .then((res) => {
-                console.log(res);
+                //console.log(res.data);
                 setCurrent(res.data[0]);
+                console.log(res);
             })
             .catch((err) => console.log("Error fetching stays data:", err));
     }, [city, uid]);

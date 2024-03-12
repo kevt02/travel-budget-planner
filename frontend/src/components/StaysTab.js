@@ -1,4 +1,4 @@
-import './Stays.css'
+import '../routes/Stays.css'
 import axios from "axios";
 import { useParams } from "react-router-dom";
 import { useAuth } from './AuthContext';
@@ -20,10 +20,10 @@ function StayTab({ hotel }) {
                 PropID: hotel.PropertyID
             });
 
-            console.log(response);
+            //console.log(response);
             window.alert("You have successfully updated.");
             //navigate('/stays');
-            
+
             window.location.reload(); // Refresh the page
         } catch (err) {
             console.log("Error: " + err);
@@ -44,11 +44,11 @@ function StayTab({ hotel }) {
                     <button className="btn btn-warning" onClick={handleSubmit}>Apply</button>
                 </div>
             </div>
-        
+
         </div>
 
-   
-        
+
+
     );
 }
 
