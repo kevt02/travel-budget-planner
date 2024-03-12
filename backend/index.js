@@ -29,8 +29,8 @@ const APIDocOptions = {
   definition: {
     openapi: '3.0.0',
     info: {
-      title: 'RESTful API',
-      description: 'An API for website',
+      title: 'RESTFUL API For Penny Pilot Website',
+      description: 'An API for Penny Pilot website',
       version: '1.0.0',
       servers: [`http://localhost:${PORT}`]
     },
